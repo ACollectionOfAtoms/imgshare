@@ -16,15 +16,32 @@ import sys
 from PyQt4 import QtGui
 
 
+class Example(QtGui.QWidget):
+
+    def __init__(self):
+        super(Example, self).__init__()
+
+        self.initUI()
+
+
+    def initUI(self):
+        
+        self.setGeometry(0,0,250,150)
+        self.setWindowTitle('Icon')
+        self.setWindowIcon(QtGui.QIcon('web.png'))
+        
+        
+        self.show()
+
+
 def main():
+
+
     app = QtGui.QApplication(sys.argv)
-    
-    w = QtGui.QWidget()
-    w.resize(250, 150)
-    w.move(300, 300)
-    w.setWindowTitle('Simple')
-    w.show()
-    
+    ex = Example()
     sys.exit(app.exec_())
+
+
+
 if __name__ == '__main__':
     main()
