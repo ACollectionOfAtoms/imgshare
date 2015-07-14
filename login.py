@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import tray
 from PyQt4 import QtGui
 from webbrowser import open_new_tab
 from imgurpython import ImgurClient
@@ -40,19 +41,14 @@ class Login(QtGui.QDialog):
         except ImgurClientError as e:
             QtGui.QMessageBox.warning(self, str(e.status_code), str(e.error_message))
 
-
-class Window(QtGui.QMainWindow):
-    def __init__(self):
-        QtGui.QMainWindow.__init__(self)
-
 if __name__ == '__main__':
 
     import sys
     app = QtGui.QApplication(sys.argv)
 
     if Login().exec_() == QtGui.QDialog.Accepted:
-        window = Window()
-        window.show()
+        tray = tray.Tray()
+        tray.main()
         sys.exit(app.exec_())
 
 
