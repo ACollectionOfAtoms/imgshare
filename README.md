@@ -1,6 +1,6 @@
 # imgshare
 
-##Purpose
+##What?
 Primairly for Mac OSX, when this application is complete it will automatically upload screen caps to imgur, and provide a link to the image.
 
 ###Why?!
