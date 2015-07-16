@@ -7,7 +7,7 @@ import re
 from datetime import datetime
 
 class Scanner():
-    def current_time(selfs):
+    def current_time(self):
         format = 'Screen Shot %Y-%m-%d at %H.%M.%S %p'
         cur_time = datetime.strftime(datetime.now(), format)
         cur_time_lst = cur_time.split()
