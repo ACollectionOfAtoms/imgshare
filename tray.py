@@ -7,6 +7,9 @@ class Tray():
             QtGui.QSystemTrayIcon.__init__(self, icon, parent)
             menu = QtGui.QMenu(parent)
             exitAction = menu.addAction("Exit")
+            optionAction = menu.addAction("Option 1")
+            optionAction = menu.addAction("Option 2")
+            optionAction = menu.addAction("Option 3")
             self.setContextMenu(menu)
 
     def main(self):
