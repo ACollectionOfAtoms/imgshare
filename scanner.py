@@ -20,7 +20,7 @@ class Scanner:
     def check_name(self, name):
         """ Returns bool on whether file name is in OSX screenshot regex pattern"""
         regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){2}\sat\s(\d){2}\.(\d){2}\.(\d){2}\s(AM|PM)'
-        Found = re.(regex, name)
+        Found = re.search(regex, name)
         if type(Found) != 'NoneType':
             return True
         else:

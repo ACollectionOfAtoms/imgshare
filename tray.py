@@ -1,15 +1,17 @@
 import sys
-from PyQt4 import QtGui
+import scanner
+from PyQt4 import QtGui, QtCore
 
 class Tray():
     class SystemTrayIcon(QtGui.QSystemTrayIcon):
         def __init__(self, icon, parent=None):
             QtGui.QSystemTrayIcon.__init__(self, icon, parent)
             menu = QtGui.QMenu(parent)
-            exitAction = menu.addAction("Exit")
-            optionAction = menu.addAction("Option 1")
-            optionAction = menu.addAction("Option 2")
-            optionAction = menu.addAction("Option 3")
+
+            exitAction = QtGui.QAction("&Exit", self)
+            exitAction.triggered.connect(QtGui.QApplication.quit) # This will quit the app but also raise an error...?!
+            menu.addAction(exitAction)
+
             self.setContextMenu(menu)
 
     def main(self):
