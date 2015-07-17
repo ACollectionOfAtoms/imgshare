@@ -1,23 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#This object shoudl continually scan a directory, looking for newly created screenshots by the user.
+#This object should continually scan a directory, looking for newly created screenshots by the user.
 
 import os
 import re
 from datetime import datetime
 
-class Scanner():
+class Scanner:
     def __init__(self):
         self.now = datetime.now()
-        self.num_files_in_dir = len(self.dsk_dir)
-
-    def current_time(self):
-        format = 'Screen Shot %Y-%m-%d at %H.%M.%S %p'
-        cur_time = datetime.strftime(datetime.now(), format)
+        self.num_files_in_dir = len(self.dsk_dir())
+        self.screenshot_path = ''
+        self.desktop = os.path.expanduser('~') + '/Desktop/'
 
     def dsk_dir(self):
-        desktop = os.path.expanduser('~') + '/Desktop/'
-        dir = os.listdir(desktop)
+        dir = os.listdir(self.desktop)
         return dir
 
     def check_name(self, name):
@@ -31,15 +28,26 @@ class Scanner():
 
     def scan(self):
         num_files = self.num_files_in_dir
-        file_list_set_a = set(self.dskdir)
+        file_list_set_a = set(self.dsk_dir())
 
-        while len(self.dsk_dir) == num_files:
+        while len(self.dsk_dir()) == num_files:
             pass
         else:
-            file_list_set_b = set(self.dskdir)
+            # Create new set containing new file; find difference in set, store name,
+            # update self.num_files_in_dir,
+            # check if name matches the OSX screenshot syntax, and finally
+            # Either store the screenshot path or
+            # continue to scan!
+            file_list_set_b = set(self.dsk_dir())
             new_file = file_list_set_a ^ file_list_set_b
             new_file = next(iter(nw_file))
+            self.num_files_in_dir = len(self.dsk_dir())
+
             if self.check_name(new_file):
+                self.screenshot_path = self.desktop + new_file
+                self.scan()
+            else:
+                self.scan()
 
 
 
