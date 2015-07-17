@@ -22,9 +22,11 @@ class Tray(QtGui.QSystemTrayIcon):
         self.setContextMenu(menu)
 
     def appExit(self):
+        kill_proc_tree(me)
         self.stop_event.set()
         self.scanner.scan(self.stop_event)
         sys.exit()
+
 
 
 def launch():
@@ -36,9 +38,10 @@ def launch():
     sys.exit(app.exec_())
 
 
-    def kill_proc_tree(pid, including_parent=True):
-        parent = psutil.Process(pid)
-        if including_parent:
-            parent.kill()
-    me = os.getpid()
-    kill_proc_tree(me)
+def kill_proc_tree(pid, including_parent=True):
+    parent = psutil.Process(pid)
+    if including_parent:
+        parent.kill()
+
+me = os.getpid()
+
