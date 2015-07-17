@@ -27,7 +27,7 @@ class Login(QtGui.QDialog):
         self.setStyleSheet("""
             background-color: rgb(49,49,49);
             color: rgb(255,255,255);
-    """)
+            """)
 
         layout = QtGui.QVBoxLayout(self)
         layout.addWidget(self.message)

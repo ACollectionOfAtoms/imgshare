@@ -15,14 +15,14 @@ class Scanner:
         self.desktop = os.path.expanduser('~') + '/Desktop/'
         self.num_files_in_dir = len(self._dsk_dir())
         self.stop_event = threading.Event()
-        self.regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){2}\sat\s(\d){2}\.(\d){2}\.(\d){2}\s(AM|PM)\.(\w){3}'
+        self.regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){1,2}\sat\s(\d){1,2}\.(\d){1,2}\.(\d){1,2}\s(PM|AM)\.(\w){3}'
 
     def _dsk_dir(self):
         dir_list = [f for f in os.listdir(self.desktop) if f[0] != '.']
         return dir_list
 
     def _check_name(self, name):
-        """ Returns bool on whether file name is in OSX screenshot regex pattern"""
+        """ Returns bool on whether file name is in OSX screenshot regex pattern """
         found = re.search(self.regex, name)
         return found.__repr__() != 'None'
 
