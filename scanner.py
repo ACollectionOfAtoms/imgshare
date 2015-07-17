@@ -18,7 +18,7 @@ class Scanner:
         self.regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){2}\sat\s(\d){2}\.(\d){2}\.(\d){2}\s(AM|PM)\.(\w){3}'
 
     def _dsk_dir(self):
-        dir_list = os.listdir(self.desktop)
+        dir_list = [f for f in os.listdir(self.desktop) if f[0] != '.']
         return dir_list
 
     def _check_name(self, name):
@@ -46,13 +46,11 @@ class Scanner:
             file_list_set_b = set(self._dsk_dir())
             new_file = file_list_set_a ^ file_list_set_b
             new_file = next(iter(new_file))
-            reg_object = re.search(self.regex, new_file)
-            new_file = reg_object.group()
-
             self.num_files_in_dir = len(self._dsk_dir())
 
             if self._check_name(new_file):
-                print new_file
+                reg_object = re.search(self.regex, new_file)
+                new_file = reg_object.group()
                 self.screenshot_path = self.desktop + new_file
                 print self.screenshot_path
                 self.scan(self.stop_event)
