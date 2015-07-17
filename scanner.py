@@ -6,7 +6,7 @@ import os
 import re
 import threading
 import imgurpython
-from uploader import upload
+from uploader import Uploader
 
 class Scanner:
     """ Scans an OSX desktop directory, the default storage for screenshots! """
@@ -36,6 +36,7 @@ class Scanner:
             simply continue to scan!
         :rtype : object
         """
+
         num_files = self.num_files_in_dir
         file_list_set_a = set(self._dsk_dir())
 
@@ -55,7 +56,8 @@ class Scanner:
                 new_file = reg_object.group()
                 self.screenshot_path = self.desktop + new_file
 
-                upload(self.client, self.screenshot_path)
+                uploader = Uploader(self.client, self.screenshot_path)
+                uploader.upload()
                 print self.screenshot_path
                 self.scan(self.stop_event)
             else:
