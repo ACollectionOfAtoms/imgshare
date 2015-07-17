@@ -49,14 +49,14 @@ class Login(QtGui.QDialog):
         except ImgurClientError as e:
             QtGui.QMessageBox.warning(self, str(e.status_code), str(e.error_message))
 
+
 if __name__ == '__main__':
 
     import sys
     app = QtGui.QApplication(sys.argv)
 
     if Login().exec_() == QtGui.QDialog.Accepted:
-        tray = tray.Tray()
-        tray.main()
+        tray.launch()
         sys.exit(app.exec_())
 
 
