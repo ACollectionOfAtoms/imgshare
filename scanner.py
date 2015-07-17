@@ -4,11 +4,11 @@
 
 import os
 import re
-from datetime import datetime
 
 class Scanner:
+    """ Scans an OSX desktop directory, the default storage for screenshots!
+    """
     def __init__(self):
-        self.now = datetime.now()
         self.num_files_in_dir = len(self.dsk_dir())
         self.screenshot_path = ''
         self.desktop = os.path.expanduser('~') + '/Desktop/'
@@ -18,7 +18,7 @@ class Scanner:
         return dir
 
     def check_name(self, name):
-        """ Returns bool if file name is in OSX screenshot regex pattern"""
+        """ Returns bool on whether file name is in OSX screenshot regex pattern"""
         regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){2}\sat\s(\d){2}\.(\d){2}\.(\d){2}\s(AM|PM)'
         Found = re.(regex, name)
         if type(Found) != 'NoneType':
@@ -27,6 +27,13 @@ class Scanner:
             return False
 
     def scan(self):
+        """ Create new set containing new file; find difference in set, store name,
+            update self.num_files_in_dir,
+            check if name matches the OSX screenshot syntax, and finally
+            Either store the screenshot path and continue to scan, or
+            simply continue to scan!
+        :rtype : object
+        """
         num_files = self.num_files_in_dir
         file_list_set_a = set(self.dsk_dir())
 
@@ -36,8 +43,8 @@ class Scanner:
             # Create new set containing new file; find difference in set, store name,
             # update self.num_files_in_dir,
             # check if name matches the OSX screenshot syntax, and finally
-            # Either store the screenshot path or
-            # continue to scan!
+            # Either store the screenshot path and continue to scan, or
+            # simply continue to scan!
             file_list_set_b = set(self.dsk_dir())
             new_file = file_list_set_a ^ file_list_set_b
             new_file = next(iter(nw_file))
