@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
 import tray
 from PyQt4 import QtGui, QtCore
 from webbrowser import open_new_tab
@@ -53,9 +52,10 @@ class Login(QtGui.QDialog):
 if __name__ == '__main__':
     import sys
     app = QtGui.QApplication(sys.argv)
+    greet = Login()
 
-    if Login().exec_() == QtGui.QDialog.Accepted:
-        tray.launch()
+    if greet.exec_() == QtGui.QDialog.Accepted:
+        tray.launch(greet.client)
         sys.exit(app.exec_())
 
 

@@ -1,15 +1,18 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys
 import threading
 import psutil
 import os
 from scanner import Scanner
-import imgurpython
 from PyQt4 import QtGui, QtCore
 
 
 class Tray(QtGui.QSystemTrayIcon):
     def __init__(self, icon, parent=None):
-        self.scanner = Scanner()
+        self.client = ''
+        self.scanner = Scanner(self.client)
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
@@ -28,11 +31,11 @@ class Tray(QtGui.QSystemTrayIcon):
         sys.exit()
 
 
-
-def launch():
+def launch(client):
     app = QtGui.QApplication(sys.argv)
     w = QtGui.QWidget()
     trayIcon = Tray(QtGui.QIcon("ico.png"), w)
+    trayIcon.client = client
 
     trayIcon.show()
     sys.exit(app.exec_())

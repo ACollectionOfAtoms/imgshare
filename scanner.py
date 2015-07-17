@@ -5,12 +5,14 @@
 import os
 import re
 import threading
-
+import imgurpython
+from uploader import upload
 
 class Scanner:
-    """ Scans an OSX desktop directory, the default storage for screenshots!
-    """
-    def __init__(self):
+    """ Scans an OSX desktop directory, the default storage for screenshots! """
+    def __init__(self, client):
+        self.client = client
+        print str(self.client) + "*" * 15
         self.screenshot_path = ''
         self.desktop = os.path.expanduser('~') + '/Desktop/'
         self.num_files_in_dir = len(self._dsk_dir())
@@ -52,6 +54,8 @@ class Scanner:
                 reg_object = re.search(self.regex, new_file)
                 new_file = reg_object.group()
                 self.screenshot_path = self.desktop + new_file
+
+                upload(self.client, self.screenshot_path)
                 print self.screenshot_path
                 self.scan(self.stop_event)
             else:
