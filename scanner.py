@@ -1,32 +1,32 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#This object should continually scan a directory, looking for newly created screenshots by the user.
+# This object should continually scan a directory, looking for newly created screenshots by the user.
 
 import os
 import re
+import threading
+
 
 class Scanner:
     """ Scans an OSX desktop directory, the default storage for screenshots!
     """
     def __init__(self):
-        self.num_files_in_dir = len(self.dsk_dir())
         self.screenshot_path = ''
         self.desktop = os.path.expanduser('~') + '/Desktop/'
+        self.num_files_in_dir = len(self._dsk_dir())
+        self.stop_event = threading.Event()
+        self.regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){2}\sat\s(\d){2}\.(\d){2}\.(\d){2}\s(AM|PM)\.(\w){3}'
 
-    def dsk_dir(self):
-        dir = os.listdir(self.desktop)
-        return dir
+    def _dsk_dir(self):
+        dir_list = os.listdir(self.desktop)
+        return dir_list
 
-    def check_name(self, name):
+    def _check_name(self, name):
         """ Returns bool on whether file name is in OSX screenshot regex pattern"""
-        regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){2}\sat\s(\d){2}\.(\d){2}\.(\d){2}\s(AM|PM)'
-        Found = re.search(regex, name)
-        if type(Found) != 'NoneType':
-            return True
-        else:
-            return False
+        found = re.search(self.regex, name)
+        return found.__repr__() != 'None'
 
-    def scan(self):
+    def scan(self, stop_event):
         """ Create new set containing new file; find difference in set, store name,
             update self.num_files_in_dir,
             check if name matches the OSX screenshot syntax, and finally
@@ -35,21 +35,30 @@ class Scanner:
         :rtype : object
         """
         num_files = self.num_files_in_dir
-        file_list_set_a = set(self.dsk_dir())
+        file_list_set_a = set(self._dsk_dir())
 
-        while len(self.dsk_dir()) == num_files:
+        if stop_event.isSet():
+            return
+
+        while len(self._dsk_dir()) == num_files and not stop_event.isSet():
             pass
         else:
-            file_list_set_b = set(self.dsk_dir())
+            file_list_set_b = set(self._dsk_dir())
             new_file = file_list_set_a ^ file_list_set_b
-            new_file = next(iter(nw_file))
-            self.num_files_in_dir = len(self.dsk_dir())
+            new_file = next(iter(new_file))
+            reg_object = re.search(self.regex, new_file)
+            new_file = reg_object.group()
 
-            if self.check_name(new_file):
+            self.num_files_in_dir = len(self._dsk_dir())
+
+            if self._check_name(new_file):
+                print new_file
                 self.screenshot_path = self.desktop + new_file
-                self.scan()
+                print self.screenshot_path
+                self.scan(self.stop_event)
             else:
-                self.scan()
+                print 'Scanner don\'t care!' + ' **** ' + new_file
+                self.scan(self.stop_event)
 
 
 

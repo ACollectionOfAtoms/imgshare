@@ -36,7 +36,7 @@ class Login(QtGui.QDialog):
         layout.addWidget(self.buttonLogin)
 
     def authenticate(self):
-        #authenticate imgur user login
+        # authenticate imgur user login
         authorization_url = self.client.get_auth_url('pin')
         open_new_tab(authorization_url)
 
@@ -51,7 +51,6 @@ class Login(QtGui.QDialog):
 
 
 if __name__ == '__main__':
-
     import sys
     app = QtGui.QApplication(sys.argv)
 
