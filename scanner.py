@@ -40,11 +40,6 @@ class Scanner:
         while len(self.dsk_dir()) == num_files:
             pass
         else:
-            # Create new set containing new file; find difference in set, store name,
-            # update self.num_files_in_dir,
-            # check if name matches the OSX screenshot syntax, and finally
-            # Either store the screenshot path and continue to scan, or
-            # simply continue to scan!
             file_list_set_b = set(self.dsk_dir())
             new_file = file_list_set_a ^ file_list_set_b
             new_file = next(iter(nw_file))
