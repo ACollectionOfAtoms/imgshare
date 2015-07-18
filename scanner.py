@@ -5,7 +5,6 @@
 import os
 import re
 import threading
-import imgurpython
 import uploader
 
 
@@ -14,7 +13,7 @@ class Scanner:
     def __init__(self):
         self.client = ''
         self.screenshot_path = ''
-        self.loader = uploader.load(self.client, self.screenshot_path)
+        self.loader = uploader.load(self.client)
         self.desktop = os.path.expanduser('~') + '/Desktop/'
         self.num_files_in_dir = len(self._dsk_dir())
         self.stop_event = threading.Event()
@@ -56,7 +55,7 @@ class Scanner:
                 new_file = reg_object.group()
                 self.screenshot_path = self.desktop + new_file
                 print str(self.client) + " UPLOADING WITH THIS client"
-                self.loader.upload()
+                self.loader.upload(self.screenshot_path)
 
                 print self.screenshot_path
                 self.scan(self.stop_event)
@@ -69,7 +68,7 @@ class Scanner:
             print 'Uploader has no client'
         else:
             print str(self.client) + "Uploader has client!"
-            self.loader = uploader.load(self.client, self.screenshot_path)
+            self.loader = uploader.load(self.client)
 
 
 def load(client):
