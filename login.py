@@ -56,6 +56,7 @@ if __name__ == '__main__':
     greet = Login()
 
     if greet.exec_() == QtGui.QDialog.Accepted:
+        print str(greet.client) + " Client passed to tray"
         tray.launch(greet.client)
         sys.exit(app.exec_())
 

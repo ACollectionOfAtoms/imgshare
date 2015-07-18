@@ -35,7 +35,6 @@ class Scanner:
             check if name matches the OSX screenshot syntax, and finally
             Either store the screenshot path and continue to scan, or
             simply continue to scan!
-        :rtype : object
         """
 
         num_files = self.num_files_in_dir
@@ -69,7 +68,7 @@ class Scanner:
         if self.client == '':
             print 'Uploader has no client'
         else:
-            print self.client
+            print str(self.client) + "Uploader has client!"
             self.loader = uploader.load(self.client, self.screenshot_path)
 
 
@@ -79,6 +78,7 @@ def load(client):
     tool.client = client
     tool.load_client()
     print str(tool.client) + " PASSED TO scanner OBJECT"
+    print str(tool.loader.client) + " PASSED TO loader OBJECT"
     return tool
 
 
