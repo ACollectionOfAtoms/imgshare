@@ -6,14 +6,15 @@ import os
 import re
 import threading
 import imgurpython
-from uploader import Uploader
+import uploader
+
 
 class Scanner:
     """ Scans an OSX desktop directory, the default storage for screenshots! """
-    def __init__(self, client):
-        self.client = client
-        print str(self.client) + "*" * 15
+    def __init__(self):
+        self.client = ''
         self.screenshot_path = ''
+        self.loader = uploader.load(self.client, self.screenshot_path)
         self.desktop = os.path.expanduser('~') + '/Desktop/'
         self.num_files_in_dir = len(self._dsk_dir())
         self.stop_event = threading.Event()
@@ -55,15 +56,30 @@ class Scanner:
                 reg_object = re.search(self.regex, new_file)
                 new_file = reg_object.group()
                 self.screenshot_path = self.desktop + new_file
+                print str(self.client) + " UPLOADING WITH THIS client"
+                self.loader.upload()
 
-                uploader = Uploader(self.client, self.screenshot_path)
-                uploader.upload()
                 print self.screenshot_path
                 self.scan(self.stop_event)
             else:
                 print 'Scanner don\'t care!' + ' **** ' + new_file
                 self.scan(self.stop_event)
 
+    def load_client(self):
+        if self.client == '':
+            print 'Uploader has no client'
+        else:
+            print self.client
+            self.loader = uploader.load(self.client, self.screenshot_path)
+
+
+def load(client):
+    print str(client) + " PASSED TO LOADER"
+    tool = Scanner()
+    tool.client = client
+    tool.load_client()
+    print str(tool.client) + " PASSED TO scanner OBJECT"
+    return tool
 
 
 

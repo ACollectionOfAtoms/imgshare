@@ -43,6 +43,7 @@ class Login(QtGui.QDialog):
         try:
             self.client.authorize(str(self.textpin.text()), 'pin')
             self.accept()
+            print str(self.client) + "THE ORIGINAL"
             return self.client
 
         except ImgurClientError as e:
