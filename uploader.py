@@ -9,7 +9,7 @@ class Uploader:
         self.client = ''
 
     def upload(self, path):
-        album = 'imgshare_album'
+        album = None
         config = {
                 'album': album,
                 'name': path,
@@ -20,6 +20,7 @@ class Uploader:
         if self.client != '':
             print "*"*10 + " Success! " + "*"*10
             image = self.client.upload_from_path(path, config=config, anon=False)
+            print "Here it is: {0} ".format(image['link'])
         else:
             print 'No Client!'
 
