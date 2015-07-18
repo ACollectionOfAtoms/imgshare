@@ -54,30 +54,23 @@ class Scanner:
                 reg_object = re.search(self.regex, new_file)
                 new_file = reg_object.group()
                 self.screenshot_path = self.desktop + new_file
-                print str(self.client) + " UPLOADING WITH THIS client"
-                self.loader.upload(self.screenshot_path)
 
-                print self.screenshot_path
+                self.loader.upload(self.screenshot_path)
                 self.scan(self.stop_event)
             else:
-                print 'Scanner don\'t care!' + ' **** ' + new_file
                 self.scan(self.stop_event)
 
     def load_client(self):
         if self.client == '':
-            print 'Uploader has no client'
+            pass
         else:
-            print str(self.client) + "Uploader has client!"
             self.loader = uploader.load(self.client)
 
 
 def load(client):
-    print str(client) + " PASSED TO LOADER"
     tool = Scanner()
     tool.client = client
     tool.load_client()
-    print str(tool.client) + " PASSED TO scanner OBJECT"
-    print str(tool.loader.client) + " PASSED TO loader OBJECT"
     return tool
 
 

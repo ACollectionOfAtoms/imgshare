@@ -32,7 +32,7 @@ class Tray(QtGui.QSystemTrayIcon):
 
     def load_client(self):
         if self.client == '':
-            print 'Client Not loaded'
+            pass
         else:
             self.scanner = scanner.load(self.client)
             self.stop_event = threading.Event()
@@ -40,14 +40,12 @@ class Tray(QtGui.QSystemTrayIcon):
             self.c_thread.start()
 
 def launch(client):
-    print str(client) + " PASSED TO LAUNCH FUNCTION"
     app = QtGui.QApplication(sys.argv)
     w = QtGui.QWidget()
 
     trayIcon = Tray(QtGui.QIcon("ico.png"), w)
     trayIcon.client = client
     trayIcon.load_client()
-    print str(trayIcon.client) + " PASSED TO trayIcon OBJECT"
 
     trayIcon.show()
     sys.exit(app.exec_())

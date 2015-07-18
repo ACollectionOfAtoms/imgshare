@@ -16,20 +16,14 @@ class Uploader:
                 'title': path,
                 'description' : 'Uploaded with imgshare on {0}'.format(datetime.now())
                 }
-        print "Uploading Image"
         if self.client != '':
-            print "*"*10 + " Success! " + "*"*10
             image = self.client.upload_from_path(path, config=config, anon=False)
             print "Here it is: {0} ".format(image['link'])
         else:
-            print 'No Client!'
-
-        print "Done"
+            pass
 
 
 def load(client):
     tool = Uploader()
     tool.client = client
-    print str(tool.client) + " PASSED TO UPLOADER LOAD FUNCTION"
-    print str(tool) + " This tool has the client object"
     return tool

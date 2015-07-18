@@ -43,7 +43,6 @@ class Login(QtGui.QDialog):
         try:
             self.client.authorize(str(self.textpin.text()), 'pin')
             self.accept()
-            print str(self.client) + "THE ORIGINAL"
             return self.client
 
         except ImgurClientError as e:
@@ -56,7 +55,6 @@ if __name__ == '__main__':
     greet = Login()
 
     if greet.exec_() == QtGui.QDialog.Accepted:
-        print str(greet.client) + " Client passed to tray"
         tray.launch(greet.client)
         sys.exit(app.exec_())
 
