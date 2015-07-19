@@ -15,6 +15,7 @@ class Login(QtGui.QDialog):
         client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
         self.setWindowTitle('imgshare')
         self.setWindowIcon(QtGui.QIcon("ico.png"))
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.message = QtGui.QLabel('Enter PIN')
         self.message.setAlignment(QtCore.Qt.AlignCenter)
         self.client = ImgurClient(client_id, client_secret)
@@ -26,7 +27,7 @@ class Login(QtGui.QDialog):
         self.buttonPin.clicked.connect(self.authenticate)
 
         self.setStyleSheet("""
-            background-color: rgb(49,49,49);
+            background-color: rgb(0,0,0);
             color: rgb(255,255,255);
             """)
 
