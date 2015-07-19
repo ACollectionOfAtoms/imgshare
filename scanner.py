@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# This object should continually scan a directory, looking for newly created screenshots by the user.
 
 import os
 import re
