@@ -13,30 +13,49 @@ class Login(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         client_id = '912116b2944a624'
         client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
+        self.client = ImgurClient(client_id, client_secret)
+
         self.setWindowTitle('_imgshare')
         self.setWindowIcon(QtGui.QIcon("ico.png"))
-        self.setGeometry(300, 300, 250, 150)
+        self.setGeometry(300, 300, 250, 50)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.message = QtGui.QLabel('Enter PIN')
+
+        self.message = QtGui.QLabel(' enter pin ')
         self.message.setAlignment(QtCore.Qt.AlignCenter)
-        self.client = ImgurClient(client_id, client_secret)
+
         self.textpin = QtGui.QLineEdit(self)
-        self.buttonLogin = QtGui.QPushButton('Login', self)
-        self.buttonPin = QtGui.QPushButton('Get PIN', self)
+        self.buttonLogin = QtGui.QPushButton('login', self)
+
+        self.buttonPin = QtGui.QPushButton('get pin', self)
 
         self.buttonLogin.clicked.connect(self.handle_pin)
         self.buttonPin.clicked.connect(self.authenticate)
 
+        layout = QtGui.QGridLayout(self)
+        layout.addWidget(self.buttonPin, 0, 0)
+        layout.addWidget(self.textpin, 1, 1)
+        layout.addWidget(self.message, 0, 1)
+        layout.addWidget(self.buttonLogin, 1, 0)
+
         self.setStyleSheet("""
-            background-color: rgb(0,0,0);
-            color: rgb(255,255,255);
+            QDialog {
+                background-color: rgb(50,50,50);
+            }
+            QLineEdit {
+                border-color: solid black;
+                selection-color: green;
+            }
+            QLabel {
+                color: white;
+            }
+            QPushButton {
+                background-color: rgb(50,50,50);
+                border: solid black;
+                color: rgb(255,255,255);
+                font: bold;
+            }
             """)
 
-        layout = QtGui.QVBoxLayout(self)
-        layout.addWidget(self.message)
-        layout.addWidget(self.textpin)
-        layout.addWidget(self.buttonPin)
-        layout.addWidget(self.buttonLogin)
 
     def authenticate(self):
         # authenticate imgur user login
