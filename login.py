@@ -13,8 +13,9 @@ class Login(QtGui.QDialog):
         QtGui.QDialog.__init__(self)
         client_id = '912116b2944a624'
         client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
-        self.setWindowTitle('imgshare')
+        self.setWindowTitle('_imgshare')
         self.setWindowIcon(QtGui.QIcon("ico.png"))
+        self.setGeometry(300, 300, 250, 150)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.message = QtGui.QLabel('Enter PIN')
         self.message.setAlignment(QtCore.Qt.AlignCenter)
