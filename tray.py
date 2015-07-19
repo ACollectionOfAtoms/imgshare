@@ -5,14 +5,14 @@ import sys
 import threading
 import psutil
 import os
-import scanner
+from scanner import Scanner
 from PyQt4 import QtGui, QtCore
 
 
 class Tray(QtGui.QSystemTrayIcon):
-    def __init__(self, icon, parent=None):
-        self.client = ''
-        self.scanner = scanner.load(self.client)
+    def __init__(self, client, icon, parent=None):
+        self.client = client
+        self.scanner = Scanner(self.client)
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
@@ -30,22 +30,12 @@ class Tray(QtGui.QSystemTrayIcon):
         self.scanner.scan(self.stop_event)
         sys.exit()
 
-    def load_client(self):
-        if self.client == '':
-            pass
-        else:
-            self.scanner = scanner.load(self.client)
-            self.stop_event = threading.Event()
-            self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
-            self.c_thread.start()
 
 def launch(client):
     app = QtGui.QApplication(sys.argv)
     w = QtGui.QWidget()
 
-    trayIcon = Tray(QtGui.QIcon("ico.png"), w)
-    trayIcon.client = client
-    trayIcon.load_client()
+    trayIcon = Tray(client, QtGui.QIcon("ico.png"), w)
 
     trayIcon.show()
     sys.exit(app.exec_())
@@ -57,4 +47,3 @@ def kill_proc_tree(pid, including_parent=True):
         parent.kill()
 
 me = os.getpid()
-

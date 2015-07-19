@@ -5,8 +5,8 @@ from datetime import datetime
 
 
 class Uploader:
-    def __init__(self):
-        self.client = ''
+    def __init__(self, client):
+        self.client = client
 
     def upload(self, path):
         album = None
@@ -21,9 +21,3 @@ class Uploader:
             print "Here it is: {0} ".format(image['link'])
         else:
             pass
-
-
-def load(client):
-    tool = Uploader()
-    tool.client = client
-    return tool

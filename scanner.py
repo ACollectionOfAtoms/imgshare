@@ -5,15 +5,15 @@
 import os
 import re
 import threading
-import uploader
+from uploader import Uploader
 
 
 class Scanner:
     """ Scans an OSX desktop directory, the default storage for screenshots! """
-    def __init__(self):
-        self.client = ''
+    def __init__(self, client):
+        self.client = client
         self.screenshot_path = ''
-        self.loader = uploader.load(self.client)
+        self.loader = Uploader(self.client)
         self.desktop = os.path.expanduser('~') + '/Desktop/'
         self.num_files_in_dir = len(self._dsk_dir())
         self.stop_event = threading.Event()
@@ -59,20 +59,3 @@ class Scanner:
                 self.scan(self.stop_event)
             else:
                 self.scan(self.stop_event)
-
-    def load_client(self):
-        if self.client == '':
-            pass
-        else:
-            self.loader = uploader.load(self.client)
-
-
-def load(client):
-    tool = Scanner()
-    tool.client = client
-    tool.load_client()
-    return tool
-
-
-
-

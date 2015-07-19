@@ -57,7 +57,3 @@ if __name__ == '__main__':
     if greet.exec_() == QtGui.QDialog.Accepted:
         tray.launch(greet.client)
         sys.exit(app.exec_())
-
-
-
-
