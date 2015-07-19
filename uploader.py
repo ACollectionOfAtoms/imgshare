@@ -5,8 +5,9 @@ from datetime import datetime
 
 
 class Uploader:
-    def __init__(self, client):
+    def __init__(self, client, trayIcon):
         self.client = client
+        self.trayIcon = trayIcon
 
     def upload(self, path):
         album = None

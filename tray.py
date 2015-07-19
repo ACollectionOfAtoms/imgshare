@@ -12,7 +12,7 @@ from PyQt4 import QtGui, QtCore
 class Tray(QtGui.QSystemTrayIcon):
     def __init__(self, client, icon, parent=None):
         self.client = client
-        self.scanner = Scanner(self.client)
+        self.scanner = Scanner(self.client, self)
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
