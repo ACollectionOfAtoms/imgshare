@@ -20,7 +20,7 @@ class Login(QtGui.QDialog):
         self.setGeometry(300, 300, 250, 50)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
-        self.message = QtGui.QLabel(' enter pin ')
+        self.message = QtGui.QLabel('please enter pin_ ')
         self.message.setAlignment(QtCore.Qt.AlignCenter)
 
         self.textpin = QtGui.QLineEdit(self)
@@ -50,9 +50,10 @@ class Login(QtGui.QDialog):
             }
             QPushButton {
                 background-color: rgb(50,50,50);
-                border: solid black;
+                border-color: solid black;
+                border-width: 2px;
                 color: rgb(255,255,255);
-                font: bold;
+                font: bold 14px;
             }
             """)
 
