@@ -26,7 +26,7 @@ class Scanner:
     def _check_name(self, name):
         """ Returns bool on whether file name is in OSX screenshot regex pattern """
         found = re.search(self.regex, name)
-        return found.__repr__() != 'None'
+        return found.__repr__() != 'None'  # Is this necessary?
 
     def scan(self, stop_event):
         """ Create new set containing new file; find difference in set, store name,
