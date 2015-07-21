@@ -2,7 +2,7 @@
 # imgshare
 ###What?
 For Mac OSX, this application automatically uploads screen caps (cmnd+shift+4) to imgur, and provides a link to the image.
-###Why?!
+###Why!?
 During my college years I found it tedious to share photos of math/physics/chemistry problems with friends. This expedites the process. There are (probably) apps that already do this but...I'm also completing this project for my own edification! 
 
 ##Progess so far.
