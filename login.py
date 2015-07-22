@@ -57,7 +57,6 @@ class Login(QtGui.QDialog):
             }
             """)
 
-
     def authenticate(self):
         # authenticate imgur user login
         authorization_url = self.client.get_auth_url('pin')

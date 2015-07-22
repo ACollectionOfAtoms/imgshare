@@ -11,18 +11,20 @@ from PyQt4 import QtGui, QtCore
 
 class Tray(QtGui.QSystemTrayIcon):
     def __init__(self, client, icon, parent=None):
+        QtGui.QSystemTrayIcon.__init__(self, icon, parent)
         self.client = client
         self.scanner = Scanner(self.client, self)
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
 
-        QtGui.QSystemTrayIcon.__init__(self, icon, parent)
         menu = QtGui.QMenu(parent)
-
         exitAction = menu.addAction("Exit")
         self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.appExit)
         self.setContextMenu(menu)
+
+    def show_message(self):
+        self.showMessage('Perhaps', 'This', 4, 10000000000)
 
     def appExit(self):
         kill_proc_tree(me)
@@ -36,7 +38,6 @@ def launch(client):
     w = QtGui.QWidget()
 
     trayIcon = Tray(client, QtGui.QIcon("ico.png"), w)
-
     trayIcon.show()
     sys.exit(app.exec_())
 

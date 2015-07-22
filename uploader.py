@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from PyQt4 import QtGui
+
 
 # Need to implement handling when imgur is overloaded!
 class Uploader:
@@ -11,7 +11,7 @@ class Uploader:
         self.trayIcon = trayIcon
 
     def upload(self, path):
-        self.trayIcon.showMessage('Uploadin\'', 'Shits\' uploading breh') # Growl required for this to work on OSX < 10.8
+        self.trayIcon.show_message()  # Growl required for this to work on OSX < 10.8
         album = None
         config = {
                 'album': album,
