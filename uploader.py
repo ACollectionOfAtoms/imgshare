@@ -11,7 +11,7 @@ class Uploader:
         self.trayIcon = trayIcon
 
     def upload(self, path):
-        self.trayIcon.show_message('Uploading', '...')  # Growl required for this to work on OSX < 10.8
+        self.trayIcon.showMessage('Uploading', '...')  # Growl required for this to work on OSX < 10.8
         album = None
         config = {
                 'album': album,
@@ -22,6 +22,6 @@ class Uploader:
         image = self.client.upload_from_path(path, config=config, anon=False)
 
         link = image['link']
-        self.trayIcon.show_message('Upload Complete',link)
+        self.trayIcon.showMessage('Upload Complete',link)
 
         print "Here it is: {0} ".format(image['link'])
