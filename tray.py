@@ -23,9 +23,6 @@ class Tray(QtGui.QSystemTrayIcon):
         self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.appExit)
         self.setContextMenu(menu)
 
-    def show_message(self):
-        self.showMessage('Perhaps', 'This', 4, 10000000000)
-
     def appExit(self):
         kill_proc_tree(me)
         self.stop_event.set()
