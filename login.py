@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import tray
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 from webbrowser import open_new_tab
 from imgurpython import ImgurClient
 from imgurpython.helpers.error import ImgurClientError

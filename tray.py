@@ -6,7 +6,7 @@ import threading
 import psutil
 import os
 from scanner import Scanner
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 
 
 class Tray(QtGui.QSystemTrayIcon):
