@@ -28,8 +28,8 @@ class Login(QtWidgets.QDialog):
 
         self.buttonPin = QtWidgets.QPushButton('get pin', self)
 
-        self.buttonLogin.clicked(self.handle_pin)
-        self.buttonPin.clicked(self.authenticate)
+        self.buttonLogin.clicked.connect(self.handle_pin)
+        self.buttonPin.clicked.connect(self.authenticate)
 
         layout = QtWidgets.QGridLayout(self)
         layout.addWidget(self.buttonPin, 0, 0)

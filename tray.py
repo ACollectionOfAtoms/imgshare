@@ -20,7 +20,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
 
         menu = QtWidgets.QMenu(parent)
         exitAction = menu.addAction("Exit")
-        self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.appExit)
+        self.trigger.connect(exitAction, QtCore.pyqtSignal('triggered()'), self.appExit)
         self.setContextMenu(menu)
 
     def appExit(self):
