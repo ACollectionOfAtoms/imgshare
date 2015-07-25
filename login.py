@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import tray
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 from webbrowser import open_new_tab
 from imgurpython import ImgurClient
 from imgurpython.helpers.error import ImgurClientError
 
 
-class Login(QtGui.QDialog):
+class Login(QtWidgets.QDialog):
     def __init__(self):
-        QtGui.QDialog.__init__(self)
+        QtWidgets.QDialog.__init__(self)
         client_id = '912116b2944a624'
         client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
         self.client = ImgurClient(client_id, client_secret)
@@ -20,18 +20,18 @@ class Login(QtGui.QDialog):
         self.setGeometry(300, 300, 250, 50)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
-        self.message = QtGui.QLabel('please enter pin_ ')
+        self.message = QtWidgets.QLabel('please enter pin_ ')
         self.message.setAlignment(QtCore.Qt.AlignCenter)
 
-        self.textpin = QtGui.QLineEdit(self)
-        self.buttonLogin = QtGui.QPushButton('login', self)
+        self.textpin = QtWidgets.QLineEdit(self)
+        self.buttonLogin = QtWidgets.QPushButton('login', self)
 
-        self.buttonPin = QtGui.QPushButton('get pin', self)
+        self.buttonPin = QtWidgets.QPushButton('get pin', self)
 
-        self.buttonLogin.clicked.connect(self.handle_pin)
-        self.buttonPin.clicked.connect(self.authenticate)
+        self.buttonLogin.clicked(self.handle_pin)
+        self.buttonPin.clicked(self.authenticate)
 
-        layout = QtGui.QGridLayout(self)
+        layout = QtWidgets.QGridLayout(self)
         layout.addWidget(self.buttonPin, 0, 0)
         layout.addWidget(self.textpin, 1, 1)
         layout.addWidget(self.message, 0, 1)
@@ -69,14 +69,14 @@ class Login(QtGui.QDialog):
             return self.client
 
         except ImgurClientError as e:
-            QtGui.QMessageBox.warning(self, str(e.status_code), str(e.error_message))
+            QtWidgets.QMessageBox.warning(self, str(e.status_code), str(e.error_message))
 
 
 if __name__ == '__main__':
     import sys
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     greet = Login()
 
-    if greet.exec_() == QtGui.QDialog.Accepted:
+    if greet.exec_() == QtWidgets.QDialog.Accepted:
         tray.launch(greet.client)
         sys.exit(app.exec_())

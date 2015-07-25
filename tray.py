@@ -6,19 +6,19 @@ import threading
 import psutil
 import os
 from scanner import Scanner
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 
 
-class Tray(QtGui.QSystemTrayIcon):
+class Tray(QtWidgets.QSystemTrayIcon):
     def __init__(self, client, icon, parent=None):
-        QtGui.QSystemTrayIcon.__init__(self, icon, parent)
+        QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
         self.client = client
         self.scanner = Scanner(self.client, self)
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
 
-        menu = QtGui.QMenu(parent)
+        menu = QtWidgets.QMenu(parent)
         exitAction = menu.addAction("Exit")
         self.connect(exitAction, QtCore.SIGNAL('triggered()'), self.appExit)
         self.setContextMenu(menu)
@@ -31,8 +31,8 @@ class Tray(QtGui.QSystemTrayIcon):
 
 
 def launch(client):
-    app = QtGui.QApplication(sys.argv)
-    w = QtGui.QWidget()
+    app = QtWidgets.QApplication(sys.argv)
+    w = QtWidgets.QWidget()
 
     trayIcon = Tray(client, QtGui.QIcon("ico.png"), w)
     trayIcon.show()
