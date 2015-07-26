@@ -19,7 +19,7 @@ The program then sits in the tray and scans the desktop directory.
 ![Tray sittin'](http://i.imgur.com/f3hMnxA.png)
 
 ###Link provided
-Once a picture is taken, the link can be is provided in a pop-up balloon. Clicking it sends it to the clipboard
+Once a picture is taken, the link is provided in a pop-up balloon. Clicking it sends it to the clipboard
 
 ![Balloon](http://i.imgur.com/njKMiRD.png)
 
