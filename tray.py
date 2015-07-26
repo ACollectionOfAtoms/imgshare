@@ -18,7 +18,6 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
         self.menu = QtWidgets.QMenu(parent)
-
         self.exitAction = QtWidgets.QAction("&Quit", self)
         self.exitAction.setShortcut("Cmd+Q")
         self.exitAction.setStatusTip('Good bye')
