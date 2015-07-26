@@ -24,6 +24,7 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 ![Balloon](http://i.imgur.com/njKMiRD.png)
 
 ###Next steps:
+* Create OSX app for alpha release?
 * Update visuals (login window/icon, balloon icon)
 * Catch start up and upload errors (if imgur is overloaded, program fails)
 * Give the user more options!
