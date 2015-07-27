@@ -19,15 +19,13 @@ The program then sits in the tray and scans the desktop directory.
 ![Tray sittin'](http://i.imgur.com/f3hMnxA.png)
 
 ###Link provided
-Once a picture is taken, the link is sent to the terminal. Hooray for circumventing the process of manual uploading!
-(This will eventually be provided in balloon format, rather than the terminal).
+Once a picture is taken, the link is provided in a pop-up balloon. Clicking it sends it to the clipboard
 
-![Terminal reports](http://i.imgur.com/XpYVOvG.png)
+![Balloon](http://i.imgur.com/njKMiRD.png)
 
 ###Next steps:
-* Update visuals (login window/icon)
+* Create OSX app for alpha release?
+* Update visuals (login window/icon, balloon icon)
 * Catch start up and upload errors (if imgur is overloaded, program fails)
-* Provide link in a more elegant way.
-    * Implement balloon window that sends link to clipboard when clicked!
 * Give the user more options!
 
