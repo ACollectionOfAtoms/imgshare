@@ -17,14 +17,17 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
+
         self.menu = QtWidgets.QMenu(parent)
         self.exitAction = QtWidgets.QAction("&Quit", self)
         self.exitAction.setShortcut("Cmd+Q")
         self.exitAction.setStatusTip('Good bye')
         self.exitAction.triggered.connect(self.appExit)
 
+        self.optAction = QtWidgets.QAction("&Options", self)
+
         self.menu.addAction(self.exitAction)
-        # self.trigger.connect(exitAction, QtCore.pyqtSignal('triggered()'), self.appExit)
+        self.menu.addAction(self.optAction)
         self.setContextMenu(self.menu)
 
     def appExit(self):
