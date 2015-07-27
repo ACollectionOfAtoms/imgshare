@@ -6,7 +6,7 @@ For Mac OSX, this application automatically uploads screen caps (cmnd+shift+4) t
 During my college years I found it tedious to share photos of math/physics/chemistry problems with friends. This expedites the process. There are (probably) apps that already do this but...I'm also completing this project for my own edification! 
 
 ##Progess so far.
-The program is functional in that it provides the user with a link of the screencap following file creation but, the execution of this process still needs work! The link is currently provided in the terminal, and the user does not have many options (which album to upload to etc.). Therefore the current version is at an "exceedingly alpha" stage.
+The program is functional but more options will be added soon.
 
 ###Logging in
 The imgur API requires the user to retrieve a PIN that is specifically made for the user and the registered application.
