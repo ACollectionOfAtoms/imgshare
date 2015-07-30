@@ -24,17 +24,17 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 ![Balloon](http://i.imgur.com/njKMiRD.png)
 
 ###Next steps:
-* Create OSX app for alpha release?
-* Update visuals (login window/icon, balloon icon)
-* Catch start up and upload errors (if imgur is overloaded, program fails)
-* Give the user more options!
-* Fix default upload directory (currently uploads to a "ghost" directory
+  * Create OSX app for alpha release?
+  * Update visuals (login window/icon, balloon icon)
+  * Catch start up and upload errors (if imgur is overloaded, program fails)
+  * Give the user more options!
+  * Fix default upload directory (currently uploads to a "ghost" directory
 
 ###Eager to use the pre-release?
 ####These are the dependencies:
-*PyQt5
-*imgurpython
-*pyperclip
+  * PyQt5
+  * imgurpython
+  * pyperclip
 
 The last two can be installed via pip or homebrew (and perhaps another package manager of your choice). Unfortunately, you'll have to build Qt5 and PyQt5 to get everything working! (At least I had to...What a wonderful way to spend an evening.)
 
