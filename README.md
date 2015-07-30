@@ -28,7 +28,7 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
   * Update visuals (login window/icon, balloon icon)
   * Catch start up and upload errors (if imgur is overloaded, program fails)
   * Give the user more options!
-  * Fix default upload directory (currently uploads to a "ghost" directory
+  * Fix default upload directory (currently uploads to a "ghost" directory)
 
 ##Eager to use the pre-release?
 ####These are the dependencies:
