@@ -30,7 +30,7 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
   * Give the user more options!
   * Fix default upload directory (currently uploads to a "ghost" directory
 
-###Eager to use the pre-release?
+##Eager to use the pre-release?
 ####These are the dependencies:
   * PyQt5
   * imgurpython
