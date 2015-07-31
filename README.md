@@ -36,5 +36,5 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
   * imgurpython
   * pyperclip
 
-The last two can be installed via pip or homebrew (and perhaps another package manager of your choice). Unfortunately, you'll have to build Qt5 and PyQt5 to get everything working! (At least I had to...What a wonderful way to spend an evening.)
+The last two can be installed via pip or homebrew, and perhaps another package manager of your choice. Unfortunately, you'll have to build Qt5 and PyQt5 to get everything working! (At least I had to...What a wonderful way to spend an evening.)
 
