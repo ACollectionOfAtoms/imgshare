@@ -14,6 +14,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
     def __init__(self, client, icon, parent=None):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
         self.client = client
+        self.user = self.client.get_account('me').url
         self.scanner = Scanner(self.client, self)
         self.options = OptionsWindow(self.client)
 
@@ -52,6 +53,7 @@ def launch(client):
     w = QtWidgets.QWidget()
     trayIcon = Tray(client, QtGui.QIcon("ico.png"), w)
     trayIcon.show()
+    trayIcon.showMessage("Log In Successful!", "Hello {}".format(trayIcon.user))
     sys.exit(app.exec_())
 
 
