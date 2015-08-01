@@ -32,7 +32,7 @@ class OptionsWindow(QWidget):
     def get_album_dict(self):
         return {str(album.title): str(album.id) if album.title else 'untitled' for album in self.client.get_account_albums('me')}
 
-    def set_album(self, default, path=''):
+    def album(self, default, path=''):
         if "imgshare" in self.albums and default:
             self.album = self.albums["imgshare"]
 

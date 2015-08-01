@@ -12,7 +12,7 @@ class Uploader:
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
-        self.album = self.options.set_album(default=True)
+        self.album = self.options.album(default=True)
 
     def upload(self, path):
         self.trayIcon.showMessage('Uploading', '...', 1)
