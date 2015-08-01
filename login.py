@@ -65,8 +65,9 @@ class Login(QtWidgets.QDialog):
 
     def handle_pin(self):
         try:
-            self.client.authorize(str(self.textpin.text()), 'pin')
+            credentials = self.client.authorize(str(self.textpin.text()), 'pin')
             self.accept()
+            self.client.set_user_auth(credentials['access_token'], credentials['refresh_token'])
             return self.client
 
         except ImgurClientError as e:
@@ -82,7 +83,7 @@ class Login(QtWidgets.QDialog):
 if __name__ == '__main__':
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    app.setQuitOnLastWindowClosed(False)
+    app.setQuitOnLastWindowClosed(False)  # Ensures app is only exited through Tray icon
     greet = Login()
 
     if greet.exec_() == QtWidgets.QDialog.Accepted:

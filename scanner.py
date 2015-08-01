@@ -34,7 +34,6 @@ class Scanner:
             Either store the screenshot path and continue to scan, or
             simply continue to scan!
         """
-
         num_files = self.num_files_in_dir
         file_list_set_a = set(self._dsk_dir())
 

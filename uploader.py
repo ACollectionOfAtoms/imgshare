@@ -14,7 +14,6 @@ class Uploader:
 
     def upload(self, path):
         self.trayIcon.showMessage('Uploading', '...', 1)
-        print self.client.get_account_albums('me')
         album = None
         config = {
                 'album': album,

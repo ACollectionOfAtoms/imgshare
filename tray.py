@@ -50,7 +50,6 @@ class Tray(QtWidgets.QSystemTrayIcon):
 def launch(client):
     app = QtWidgets.QApplication(sys.argv)
     w = QtWidgets.QWidget()
-
     trayIcon = Tray(client, QtGui.QIcon("ico.png"), w)
     trayIcon.show()
     sys.exit(app.exec_())
