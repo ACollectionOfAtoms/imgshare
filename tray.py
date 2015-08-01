@@ -15,8 +15,8 @@ class Tray(QtWidgets.QSystemTrayIcon):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
         self.client = client
         self.user = self.client.get_account('me').url
-        self.scanner = Scanner(self.client, self)
         self.options = OptionsWindow(self.client)
+        self.scanner = Scanner(self.client, self.options, self)
 
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))

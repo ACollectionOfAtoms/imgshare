@@ -2,38 +2,17 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from options import OptionsWindow
 import pyperclip
-from PyQt5 import QtGui
 
 
 # Need to implement handling when imgur is overloaded!
 class Uploader:
-    def __init__(self, client, trayIcon):
+    def __init__(self, client, options, trayIcon):
         self.client = client
+        self.options = options
         self.trayIcon = trayIcon
-        self.album = None
-        self.albums = self.get_album_dict()
-        self.default_album(True)
-
-    def get_album_dict(self):
-        return {str(album.title): str(album.id) if album.title else 'untitled' for album in self.client.get_account_albums('me')}
-
-    def default_album(self, default):
-        if "imgshare" in self.albums and default:
-            self.album = self.albums["imgshare"]
-
-        elif default:
-            config ={
-                'title': "imgshare",
-                'description': "Images Uploaded with the imgshare app",
-                'privacy': "hidden",
-                'layout': "grid"
-            }
-            self.client.create_album(config)
-            self.albums = self.get_album_dict()
-            self.album = self.albums["imgshare"]
-        else:
-            pass
+        self.album = self.options.set_album(default=True)
 
     def upload(self, path):
         self.trayIcon.showMessage('Uploading', '...', 1)

@@ -9,11 +9,13 @@ from uploader import Uploader
 
 class Scanner:
     """ Scans an OSX desktop directory, the default storage for screenshots! """
-    def __init__(self, client, trayIcon):
+    def __init__(self, client, options, trayIcon):
         self.client = client
+        self.options = options
         self.trayIcon = trayIcon
+
         self.screenshot_path = ''
-        self.loader = Uploader(self.client, self.trayIcon)
+        self.loader = Uploader(self.client,self.options, self.trayIcon)
         self.desktop = os.path.expanduser('~') + '/Desktop/'
         self.num_files_in_dir = len(self._dsk_dir())
         self.stop_event = threading.Event()
