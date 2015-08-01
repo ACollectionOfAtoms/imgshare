@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QDesktopWidget
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QVBoxLayout, QTabWidget, QListWidget
 from PyQt5.QtGui import QIcon
 
 
@@ -8,6 +8,25 @@ class OptionsWindow(QWidget):
         super(OptionsWindow, self).__init__()
         self.client = client
         self.albums = self.get_album_dict()
+
+        self.setWindowTitle("Options")
+        self.setWindowIcon(QIcon("ico.png"))
+        self.layout = QVBoxLayout(self)
+
+        tab_widget = QTabWidget()
+        tab1 = QWidget()
+        tab2 = QWidget()
+
+        p1_vertical = QVBoxLayout(tab1)
+        album_list = QListWidget()
+        album_list.addItems(list(self.albums.keys()))
+        p1_vertical.addWidget(album_list)
+        p2_vertical = QVBoxLayout(tab2)
+
+        tab_widget.addTab(tab1, "Settings")
+        tab_widget.addTab(tab2, "Preferences")
+
+        self.layout.addWidget(tab_widget)
 
         self.setStyleSheet("""
             QWidget {
@@ -20,7 +39,10 @@ class OptionsWindow(QWidget):
             QLabel {
                 color: white;
             }
-            QPushButton {
+            QListWidget {
+                color: white;
+            }
+            QTabWidget {
                 background-color: rgb(50,50,50);
                 border-color: solid black;
                 border-width: 2px;
@@ -30,7 +52,9 @@ class OptionsWindow(QWidget):
             """)
 
     def get_album_dict(self):
-        return {str(album.title): str(album.id) if album.title else 'untitled' for album in self.client.get_account_albums('me')}
+        return {(str(album.title) if album.title else 'untitled'):
+                (str(album.id))
+                for album in self.client.get_account_albums('me')}
 
     def album(self, default, path=''):
         if "imgshare" in self.albums and default:
