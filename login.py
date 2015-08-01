@@ -75,6 +75,7 @@ class Login(QtWidgets.QDialog):
 if __name__ == '__main__':
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
     greet = Login()
 
     if greet.exec_() == QtWidgets.QDialog.Accepted:

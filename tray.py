@@ -7,6 +7,7 @@ import psutil
 import os
 from scanner import Scanner
 from PyQt5 import QtGui, QtCore, QtWidgets
+from options import OptionsWindow
 
 
 class Tray(QtWidgets.QSystemTrayIcon):
@@ -14,20 +15,26 @@ class Tray(QtWidgets.QSystemTrayIcon):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
         self.client = client
         self.scanner = Scanner(self.client, self)
+        self.options = OptionsWindow()
+
         self.stop_event = threading.Event()
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
 
         self.menu = QtWidgets.QMenu(parent)
+
         self.exitAction = QtWidgets.QAction("&Quit", self)
-        self.exitAction.setShortcut("Cmd+Q")
+        self.exitAction.setShortcut("Ctrl+Q")
         self.exitAction.setStatusTip('Good bye')
         self.exitAction.triggered.connect(self.appExit)
 
         self.optAction = QtWidgets.QAction("&Options", self)
+        self.optAction.setShortcut("Ctrl+O")
+        self.optAction.setStatusTip("Customize")
+        self.optAction.triggered.connect(self.show_options)
 
-        self.menu.addAction(self.exitAction)
         self.menu.addAction(self.optAction)
+        self.menu.addAction(self.exitAction)
         self.setContextMenu(self.menu)
 
     def appExit(self):
@@ -36,6 +43,8 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.scanner.scan(self.stop_event)
         sys.exit()
 
+    def show_options(self):
+        self.options.initUI()
 
 def launch(client):
     app = QtWidgets.QApplication(sys.argv)

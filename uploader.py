@@ -3,6 +3,7 @@
 
 from datetime import datetime
 import pyperclip
+from PyQt5 import QtGui
 
 
 # Need to implement handling when imgur is overloaded!
@@ -12,7 +13,7 @@ class Uploader:
         self.trayIcon = trayIcon
 
     def upload(self, path):
-        self.trayIcon.showMessage('Uploading', '...', 2)
+        self.trayIcon.showMessage('Uploading', '...', 1)
         album = None
         config = {
                 'album': album,
