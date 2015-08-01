@@ -17,7 +17,8 @@ class Login(QtWidgets.QDialog):
 
         self.setWindowTitle('_imgshare')
         self.setWindowIcon(QtGui.QIcon("ico.png"))
-        self.setGeometry(300, 300, 250, 50)
+        self.resize(250, 50)
+        self.center()
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.message = QtWidgets.QLabel('please enter pin_ ')
@@ -70,6 +71,12 @@ class Login(QtWidgets.QDialog):
 
         except ImgurClientError as e:
             QtWidgets.QMessageBox.warning(self, str(e.status_code), str(e.error_message))
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QtWidgets.QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 
 if __name__ == '__main__':
