@@ -42,7 +42,7 @@ class Scanner:
         if stop_event.isSet():
             return
 
-        while len(self._dsk_dir()) == num_files and not stop_event.isSet():
+        while len(self._dsk_dir()) <= num_files and not stop_event.isSet():
             pass
         else:
             file_list_set_b = set(self._dsk_dir())

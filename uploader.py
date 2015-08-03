@@ -16,7 +16,7 @@ class Uploader:
         # self.album = self.options.album(default=True)
 
     def upload(self, path):
-        self.trayIcon.showMessage('Uploading', '...', 1)
+        self.trayIcon.showMessage('Uploading', '...', 0)
         path_list = path.split('/')
         screen_name = path_list[-1]
         dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -31,7 +31,7 @@ class Uploader:
         image = self.client.upload_from_path(path, config=config, anon=False)
         link = image['link']
 
-        self.trayIcon.showMessage('Upload Complete', link, 1)
+        self.trayIcon.showMessage('Upload Complete', link, 0)
 
         if self.trayIcon.messageClicked:
             self.to_clipboard(link)
