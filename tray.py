@@ -28,6 +28,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.exitAction.setShortcut("Ctrl+Q")
         self.exitAction.setStatusTip('Good bye')
         self.exitAction.triggered.connect(self.appExit)
+
         """
         self.optAction = QtWidgets.QAction("&Options", self)
         self.optAction.setShortcut("Ctrl+O")
@@ -48,10 +49,10 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.options.initUI()
 
 
-def launch(client):
+def launch(client, icon):
     app = QtWidgets.QApplication(sys.argv)
     w = QtWidgets.QWidget()
-    trayIcon = Tray(client, QtGui.QIcon("ico.png"), w)
+    trayIcon = Tray(client, QtGui.QIcon(icon), w)
     trayIcon.show()
     trayIcon.showMessage("Log In Successful!", "Hello {}".format(trayIcon.user))
     sys.exit(app.exec_())
