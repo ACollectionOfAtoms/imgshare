@@ -13,7 +13,7 @@ The program is functional but more options will be added soon.
 ###Logging in
 The API requires the user to retrieve a PIN that is specifically made for the user and the registered application.
 
-![Logging in](http://i.imgur.com/MTW2dxZ.png )
+![Logging in](http://i.imgur.com/rNPLSL5.png)
 
 ###Let it sit in the tray
 The program then sits in the tray awaiting the creation of a new screenshot.
