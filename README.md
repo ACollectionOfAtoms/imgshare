@@ -1,7 +1,9 @@
 [![Stories in Ready](https://badge.waffle.io/ACollectionOfAtoms/imgshare.png?label=ready&title=Ready)](https://waffle.io/ACollectionOfAtoms/imgshare)
-
-![Lovely Icon](https://raw.githubusercontent.com/ACollectionOfAtoms/imgshare/master/icons/ico-128.png)
-#imgshare
+<p align="center">
+<img src="https://raw.githubusercontent.com/ACollectionOfAtoms/imgshare/master/icons/ico-128.png">
+<h1 align="center">imgshare</h1>
+</p>
+</p>
 ###What?
 For Mac OSX >= 10.8 , this application automatically uploads screen caps (cmnd+shift+4) to imgur, and provides a link to the image.
 ###Why!?
