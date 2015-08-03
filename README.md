@@ -18,7 +18,7 @@ The API requires the user to retrieve a PIN that is specifically made for the us
 ###Let it sit in the tray
 The program then sits in the tray awaiting the creation of a new screenshot.
 
-![Tray sittin'](http://i.imgur.com/8dywTL2.png)
+![Tray sittin'](http://i.imgur.com/74sKufs.png)
 
 ###Link provided
 Once a picture is taken, the link is provided in a pop-up balloon. Clicking it sends it to the clipboard
