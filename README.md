@@ -7,7 +7,7 @@ For Mac OSX >= 10.8 , this application automatically uploads screen caps (cmnd+s
 
 During my college years I found it tedious to share photos of math/physics/chemistry problems with friends. This expedites the process. There are (probably) apps that already do this but...I'm also completing this project for my own edification! 
 
-<h2 align="center">Progess so far.</h2>
+<h2 align="center">Progess so far</h2>
 The program is functional but more options will be added soon.
 
 ###Logging in
