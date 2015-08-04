@@ -8,14 +8,13 @@ import pyperclip
 from imgurpython.helpers.error import ImgurClientError
 
 
-# Need to implement handling when imgur is overloaded!
 class Uploader:
     def __init__(self, client, options, trayIcon):
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
         self.album = None
-        # self.album = self.options.album(default=True)
+        self.album = self.options.album(default=True)
 
     def upload(self, path):
         try:

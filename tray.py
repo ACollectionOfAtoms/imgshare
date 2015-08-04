@@ -30,13 +30,12 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.exitAction.setStatusTip('Good bye')
         self.exitAction.triggered.connect(self.appExit)
 
-        """
         self.optAction = QtWidgets.QAction("&Options", self)
         self.optAction.setShortcut("Ctrl+O")
         self.optAction.setStatusTip("Customize")
         self.optAction.triggered.connect(self.show_options)
-        """
-        # self.menu.addAction(self.optAction)
+
+        self.menu.addAction(self.optAction)
         self.menu.addAction(self.exitAction)
         self.setContextMenu(self.menu)
 
