@@ -24,7 +24,7 @@ class OptionsWindow(QWidget):
         p2_vertical = QVBoxLayout(tab2)
 
         tab_widget.addTab(tab1, "Settings")
-        tab_widget.addTab(tab2, "Preferences")
+        # tab_widget.addTab(tab2, "Preferences")
 
         self.layout.addWidget(tab_widget)
 
