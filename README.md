@@ -3,13 +3,12 @@
 <img src="https://raw.githubusercontent.com/ACollectionOfAtoms/imgshare/master/icons/ico-128.png">
 <h1 align="center">imgshare</h1>
 </p>
-</p>
-###What?
+<h2 align="center">What?</h2>
 For Mac OSX >= 10.8 , this application automatically uploads screen caps (cmnd+shift+4) to imgur, and provides a link to the image.
-###Why!?
+<h2 align="center">Why!?</h2>
 During my college years I found it tedious to share photos of math/physics/chemistry problems with friends. This expedites the process. There are (probably) apps that already do this but...I'm also completing this project for my own edification! 
 
-##Progess so far.
+<h2 align="center">Progess so far.</h2>
 The program is functional but more options will be added soon.
 
 ###Logging in
