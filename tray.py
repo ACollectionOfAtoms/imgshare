@@ -6,7 +6,7 @@ import threading
 import psutil
 import os
 from scanner import Scanner
-from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 from options import OptionsWindow
 
 

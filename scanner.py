@@ -30,11 +30,11 @@ class Scanner:
         return re.match(self.regex, name) is not None
 
     def scan(self, stop_event):
-        """ Create new set containing new file; find difference in set, store name,
+        """ Create set containing new file; find difference in set, store name,
             update self.num_files_in_dir,
             check if name matches the OSX screenshot syntax, and finally
             Either store the screenshot path and continue to scan, or
-            simply continue to scan!
+            simply continue to scan.
         """
         num_files = self.num_files_in_dir
         file_list_set_a = set(self._dsk_dir())
