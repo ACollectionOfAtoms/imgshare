@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from PyQt5.QtWidgets import QMessageBox
 from options import OptionsWindow
 import pyperclip
 from imgurpython.helpers.error import ImgurClientError

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QVBoxLayout, QTabWidget, QListWidget
+from PyQt5.QtWidgets import QWidget, QDesktopWidget, QVBoxLayout, QTabWidget, QListWidget, QCheckBox, QGridLayout
 from PyQt5.QtGui import QIcon
 
 
@@ -17,14 +17,27 @@ class OptionsWindow(QWidget):
         tab1 = QWidget()
         tab2 = QWidget()
 
-        p1_vertical = QVBoxLayout(tab1)
+        p1_vertical = QGridLayout(tab1)
         album_list = QListWidget()
         album_list.addItems(list(self.albums.keys()))
-        p1_vertical.addWidget(album_list)
-        p2_vertical = QVBoxLayout(tab2)
+
+        # p2_vertical = QVBoxLayout(tab2)
 
         tab_widget.addTab(tab1, "Settings")
         # tab_widget.addTab(tab2, "Preferences")
+        self.check_box_layout = QGridLayout(self)
+
+        cb_click_send = QCheckBox('Click to send to clipboard', self)
+        cb_click_send.toggle()
+
+        cb_no_click_send = QCheckBox('Never send to clipboard', self)
+        cb_new_tab = QCheckBox('Open image in new tab', self)
+        cb_auto_send = QCheckBox('Auto-send to clipboard', self)
+
+        p1_vertical.addWidget(cb_click_send, 0, 0)
+        p1_vertical.addWidget(cb_no_click_send, 1, 0)
+        p1_vertical.addWidget(cb_new_tab, 2, 0)
+        p1_vertical.addWidget(cb_auto_send, 3, 0)
 
         self.layout.addWidget(tab_widget)
 
@@ -37,6 +50,9 @@ class OptionsWindow(QWidget):
                 selection-color: green;
             }
             QLabel {
+                color: white;
+            }
+            QCheckBox {
                 color: white;
             }
             QListWidget {
