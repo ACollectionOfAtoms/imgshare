@@ -54,6 +54,8 @@ class OptionsWindow(QWidget):
 
         dir_field = QLineEdit()
         album_choice = QComboBox()
+        for album_name in self.albums.keys():
+            album_choice.addItem(album_name)
 
         check_box_layout = QGridLayout()
         check_box_layout.addWidget(set_header, 0, 0)
@@ -91,9 +93,20 @@ class OptionsWindow(QWidget):
                 background-color: rgb(50,50,50);
             }
             QLineEdit {
-                border-color: black;
+                border-color: 1px white;
+                border-radius: 3px;
+                padding: 0 8px;
                 selection-color: #85BF25;
                 background-color: white;
+            }
+             QComboBox {
+                border: 1px black;
+                border-radius: 3px;
+                padding: 1px 18px 1px 3px;
+                min-width: 6em;
+            }
+            QComboBox::drop-down {
+                width: 15px;
             }
             QLabel#preferences {
                 color: #85BF25;

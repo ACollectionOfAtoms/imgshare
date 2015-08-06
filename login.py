@@ -15,7 +15,7 @@ class Login(QtWidgets.QDialog):
         client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
         self.client = ImgurClient(client_id, client_secret)
 
-        self.setWindowTitle('_imgshare')
+        self.setWindowTitle('imgshare')
         self.resize(250, 50)
         self.center()
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)

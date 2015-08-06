@@ -13,6 +13,7 @@ from options import OptionsWindow
 class Tray(QtWidgets.QSystemTrayIcon):
     def __init__(self, client, icon, parent=None):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
+        self.MessageIcon
         self.client = client
         self.icon = icon
         self.user = self.client.get_account('me').url
