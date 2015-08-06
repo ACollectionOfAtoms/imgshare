@@ -24,21 +24,28 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
         self.c_thread.start()
 
-        self.menu = QtWidgets.QMenu(parent)
+        menu = QtWidgets.QMenu(parent)
 
-        self.exitAction = QtWidgets.QAction("&Quit     ", self)
-        self.exitAction.setShortcut("Ctrl+Q")
-        self.exitAction.setStatusTip('Good bye')
-        self.exitAction.triggered.connect(self.appExit)
+        exitAction = QtWidgets.QAction("&Quit     ", self)
+        exitAction.setShortcut("Ctrl+Q")
+        exitAction.setStatusTip('Good bye')
+        exitAction.triggered.connect(self.appExit)
 
-        self.optAction = QtWidgets.QAction("&Options...  ", self)
-        self.optAction.setShortcut("Ctrl+O")
-        self.optAction.setStatusTip("Customize")
-        self.optAction.triggered.connect(self.show_options)
+        optAction = QtWidgets.QAction("&Options...  ", self)
+        optAction.setShortcut("Ctrl+O")
+        optAction.setStatusTip("Customize")
+        optAction.triggered.connect(self.show_options)
 
-        self.menu.addAction(self.optAction)
-        self.menu.addAction(self.exitAction)
-        self.setContextMenu(self.menu)
+        sendAction = QtWidgets.QAction("Send Last Image to Clipboard", self)
+        sendAction.setShortcut("Ctrl+S")
+        sendAction.setStatusTip("...")
+        # Trigger goes here should grey-out if
+        # Auto send to clipboard option enabled.
+
+        menu.addAction(sendAction)
+        menu.addAction(optAction)
+        menu.addAction(exitAction)
+        self.setContextMenu(menu)
 
     def appExit(self):
         kill_proc_tree(me)

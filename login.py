@@ -51,6 +51,7 @@ class Login(QtWidgets.QDialog):
             }
             QLabel#message {
                 color: #85BF25;
+                font: bold 14px;
             }
             QPushButton {
                 background-color: rgb(50,50,50);
