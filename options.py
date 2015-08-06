@@ -16,7 +16,10 @@ class OptionsWindow(QWidget):
                     for album in self.client.get_account_albums('me')}
 
         except ImgurClientError as e:
-            self.trayIcon.showMessage(str(e.status_code), str(e.error_message))
+            stat_code = str(e.status_code)
+            err_msg = str(e.error_message)
+            self.trayIcon.showMessage(stat_code, "Error: " + "\"" + err_msg + "\"" +
+                                      "\nimgur is having issues! You may want to restart.")
 
     def album(self, default, path=''):
         if "imgshare" in self.albums and default:
@@ -36,7 +39,7 @@ class OptionsWindow(QWidget):
             return path
 
     def initUI(self):
-        if self.layout() == None:
+        if self.layout() is None:
             self.center()
             self.setWindowTitle('Options')
             # Grid for checkbox options

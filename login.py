@@ -70,7 +70,7 @@ class Login(QtWidgets.QDialog):
             stat_code = str(e.status_code)
             err_msg = str(e.error_message)
             QtWidgets.QMessageBox.warning(self, stat_code, "Error " + "\"" + err_msg + "\"" +
-                                          "\n\nIt seems imgur is having some issues! imgshare must be restarted. :(")
+                                          "\n\nIt seems imgur is having some issues! imgshare will restart now :(")
             self.appExit()
 
     def appExit(self):

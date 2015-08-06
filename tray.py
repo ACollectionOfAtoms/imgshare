@@ -5,6 +5,7 @@ import sys
 import threading
 import psutil
 import os
+import pyperclip
 from scanner import Scanner
 from PyQt5 import QtGui, QtWidgets
 from options import OptionsWindow
@@ -13,7 +14,6 @@ from options import OptionsWindow
 class Tray(QtWidgets.QSystemTrayIcon):
     def __init__(self, client, icon, parent=None):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
-        self.MessageIcon
         self.client = client
         self.icon = icon
         self.user = self.client.get_account('me').url
@@ -39,6 +39,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
         sendAction = QtWidgets.QAction("Copy Link of Last Uploaded Image", self)
         sendAction.setShortcut("Ctrl+S")
         sendAction.setStatusTip("...")
+        sendAction.triggered.connect(self.copy_last)
         # Trigger goes here should grey-out if
         # Auto send to clipboard option enabled.
 
@@ -55,6 +56,9 @@ class Tray(QtWidgets.QSystemTrayIcon):
 
     def show_options(self):
         self.options.initUI()
+
+    def copy_last(self):
+        self.scanner.loader.to_clipboard()
 
 
 def launch(client, icon):
