@@ -31,10 +31,9 @@ User options soon to come.
 ![Options](http://i.imgur.com/icEGEe9.png)
 
 ###Next steps:
-  * Update visuals (login window/icon, balloon icon)
-  * Catch start up and upload errors (if imgur is overloaded, program fails)
-  * Give the user more options!
+  * Implement Options window functionality
   * Create OSX app for alpha release?
+  * Future: allow user to easily upload images on their computer or the web through right-click functionality.
 
 ##Eager to use the pre-release?
 ####These are the Python 2.7 dependencies:
