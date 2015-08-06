@@ -1,71 +1,13 @@
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QVBoxLayout, QTabWidget, QListWidget, QCheckBox, QGridLayout
+from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QGridLayout,
+                             QLabel, QPushButton, QLineEdit, QComboBox)
 from PyQt5.QtGui import QIcon
 
 
 class OptionsWindow(QWidget):
-
     def __init__(self, client):
         super(OptionsWindow, self).__init__()
         self.client = client
         self.albums = self.get_album_dict()
-
-        self.setWindowTitle("Options")
-        self.setWindowIcon(QIcon("ico.png"))
-        self.layout = QVBoxLayout(self)
-
-        tab_widget = QTabWidget()
-        tab1 = QWidget()
-        tab2 = QWidget()
-
-        p1_vertical = QGridLayout(tab1)
-        album_list = QListWidget()
-        album_list.addItems(list(self.albums.keys()))
-
-        # p2_vertical = QVBoxLayout(tab2)
-
-        tab_widget.addTab(tab1, "Settings")
-        # tab_widget.addTab(tab2, "Preferences")
-        self.check_box_layout = QGridLayout(self)
-
-        cb_click_send = QCheckBox('Click to send to clipboard', self)
-        cb_click_send.toggle()
-
-        cb_no_click_send = QCheckBox('Never send to clipboard', self)
-        cb_new_tab = QCheckBox('Open image in new tab', self)
-        cb_auto_send = QCheckBox('Auto-send to clipboard', self)
-
-        p1_vertical.addWidget(cb_click_send, 0, 0)
-        p1_vertical.addWidget(cb_no_click_send, 1, 0)
-        p1_vertical.addWidget(cb_new_tab, 2, 0)
-        p1_vertical.addWidget(cb_auto_send, 3, 0)
-
-        self.layout.addWidget(tab_widget)
-
-        self.setStyleSheet("""
-            QWidget {
-                background-color: rgb(50,50,50);
-            }
-            QLineEdit {
-                border-color: solid black;
-                selection-color: green;
-            }
-            QLabel {
-                color: white;
-            }
-            QCheckBox {
-                color: white;
-            }
-            QListWidget {
-                color: white;
-            }
-            QTabWidget {
-                background-color: rgb(50,50,50);
-                border-color: solid black;
-                border-width: 2px;
-                color: rgb(255,255,255);
-                font: bold 14px;
-            }
-            """)
 
     def get_album_dict(self):
         return {(str(album.title) if album.title else 'untitled'):
@@ -77,7 +19,7 @@ class OptionsWindow(QWidget):
             self.album = self.albums["imgshare"]
 
         elif default:
-            config ={
+            config = {
                 'title': "imgshare",
                 'description': "Images Uploaded with the imgshare app",
                 'privacy': "hidden",
@@ -90,9 +32,101 @@ class OptionsWindow(QWidget):
             return path
 
     def initUI(self):
-        self.resize(500, 320)
         self.center()
         self.setWindowTitle('Options')
+        # Grid for checkbox options
+        set_header = QLabel('Settings')
+        set_header.setObjectName('settings')  # In order to customize style in stylesheet
+
+        pref_header = QLabel('Preferences')
+        pref_header.setObjectName('preferences')
+
+        set_dir = QLabel('Set Screenshot Directory:')
+        set_album = QLabel('Set imgur Album:')
+
+        cb_click_send = QCheckBox('Click Balloon to Send to Clipboard')
+        cb_click_send.toggle()
+
+        cb_no_click_send = QCheckBox('Never Send to Clipboard')
+        cb_new_tab = QCheckBox('Open Image in Browser')
+        cb_auto_send = QCheckBox('Auto-send to Clipboard')
+        cb_launch_start = QCheckBox('Launch on Start up')
+
+        dir_field = QLineEdit()
+        album_choice = QComboBox()
+
+        check_box_layout = QGridLayout()
+        check_box_layout.addWidget(set_header, 0, 0)
+        check_box_layout.addWidget(cb_click_send, 1, 0)
+        check_box_layout.addWidget(cb_no_click_send, 1, 1)
+        check_box_layout.addWidget(cb_new_tab, 1, 2)
+        check_box_layout.addWidget(cb_auto_send, 2, 0)
+        check_box_layout.addWidget(cb_launch_start, 2, 1)
+
+        check_box_layout.addWidget(pref_header, 3, 0)
+        check_box_layout.addWidget(set_dir, 4, 0)
+        check_box_layout.addWidget(dir_field, 5, 0)
+        check_box_layout.addWidget(set_album, 4, 1)
+        check_box_layout.addWidget(album_choice, 5, 1)
+        ok_button = QPushButton("Ok")
+        cancel_button = QPushButton("Cancel")
+
+        # Window Layout
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(ok_button)
+        hbox.addWidget(cancel_button)
+
+        vbox = QVBoxLayout()
+        vbox.addLayout(check_box_layout)
+        vbox.addLayout(hbox)
+
+        self.setLayout(vbox)
+
+        # album_list = QListWidget()
+        # album_list.addItems(list(self.albums.keys()))
+
+        self.setStyleSheet("""
+            QWidget {
+                background-color: rgb(50,50,50);
+            }
+            QLineEdit {
+                border-color: black;
+                selection-color: #85BF25;
+                background-color: white;
+            }
+            QLabel#preferences {
+                color: #85BF25;
+                font: bold 14px;
+            }
+            QLabel#settings {
+                color: #85BF25;
+                font: bold 14px;
+            }
+            QLabel {
+                color: white;
+            }
+            QComboBox {
+                background-color: white;
+            }
+            QLabel#set_header {
+                color: white;
+                font: bold 14px;
+            }
+            QCheckBox {
+                color: white;
+            }
+            QListWidget {
+                color: white;
+            }
+            QPushButton {
+                background-color: rgb(50,50,50);
+                border-color: solid black;
+                border-width: 2px;
+                color: rgb(255,255,255);
+                font: bold 14px;
+            }
+            """)
 
         self.show()
 
