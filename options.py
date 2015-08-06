@@ -147,7 +147,7 @@ class OptionsWindow(QWidget):
                 """)
             self.show()
         else:
-            self.activateWindow()
+            self.show()
 
     def center(self):
         qr = self.frameGeometry()
