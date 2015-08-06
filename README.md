@@ -11,9 +11,9 @@ During my college years I found it tedious to share photos of math/physics/chemi
 The program is functional but more options will be added soon.
 
 ###Logging in
-The API requires the user to retrieve a PIN that is specifically made for the user and the registered application.
+The API requires the user to retrieve a PIN that is specifically made for the user and the registered application. The "Get PIN" button launches the users browser and directs them to retrieve this PIN.
 
-![Logging in](http://i.imgur.com/rNPLSL5.png)
+![Logging in](http://i.imgur.com/6VhLwK6.png)
 
 ###Let it sit in the tray
 The program then sits in the tray awaiting the creation of a new screenshot.
@@ -25,11 +25,16 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 
 ![Balloon](http://i.imgur.com/njKMiRD.png)
 
+### Configurations
+User options soon to come. 
+
+![Options](http://i.imgur.com/BqxD8BR.png)
+
 ###Next steps:
-  * Create OSX app for alpha release?
   * Update visuals (login window/icon, balloon icon)
   * Catch start up and upload errors (if imgur is overloaded, program fails)
   * Give the user more options!
+  * Create OSX app for alpha release?
 
 ##Eager to use the pre-release?
 ####These are the Python 2.7 dependencies:
