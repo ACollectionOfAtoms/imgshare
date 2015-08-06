@@ -11,9 +11,7 @@ from imgurpython.helpers.error import ImgurClientError
 class Login(QtWidgets.QDialog):
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
-        client_id = '912116b2944a624'
-        client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
-        self.client = ImgurClient(client_id, client_secret)
+        self.client = None
 
         self.setWindowTitle('imgshare')
         self.resize(250, 50)
@@ -61,6 +59,22 @@ class Login(QtWidgets.QDialog):
                 font: bold 14px;
             }
             """)
+        self.init_client()
+
+    def init_client(self):
+        try:
+            client_id = '912116b2944a624'
+            client_secret = 'c4fc62a0b62338f9e25f9062147e2d0ca44f428e'
+            self.client = ImgurClient(client_id, client_secret)
+        except ImgurClientError as e:
+            stat_code = str(e.status_code)
+            err_msg = str(e.error_message)
+            QtWidgets.QMessageBox.warning(self, stat_code, "Error " + "\"" + err_msg + "\"" +
+                                          "\n\nIt seems imgur is having some issues! imgshare must be restarted. :(")
+            self.appExit()
+
+    def appExit(self):
+        sys.exit()
 
     def authenticate(self):
         # authenticate imgur user login

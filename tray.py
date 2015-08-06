@@ -36,7 +36,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
         optAction.setStatusTip("Customize")
         optAction.triggered.connect(self.show_options)
 
-        sendAction = QtWidgets.QAction("Send Last Image to Clipboard", self)
+        sendAction = QtWidgets.QAction("Copy Link of Last Uploaded Image", self)
         sendAction.setShortcut("Ctrl+S")
         sendAction.setStatusTip("...")
         # Trigger goes here should grey-out if
@@ -62,7 +62,7 @@ def launch(client, icon):
     w = QtWidgets.QWidget()
     trayIcon = Tray(client, QtGui.QIcon(icon), w)
     trayIcon.show()
-    trayIcon.showMessage("Log In Successful!", "Hello {}".format(trayIcon.user), 0)
+    trayIcon.showMessage("Log In Successful!", "Hello {} (~:".format(trayIcon.user), 0)
     sys.exit(app.exec_())
 
 

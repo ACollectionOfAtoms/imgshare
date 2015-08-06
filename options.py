@@ -10,9 +10,13 @@ class OptionsWindow(QWidget):
         self.albums = self.get_album_dict()
 
     def get_album_dict(self):
-        return {(str(album.title) if album.title else 'untitled'):
-                (str(album.id))
-                for album in self.client.get_account_albums('me')}
+        try:
+            return {(str(album.title) if album.title else 'untitled'):
+                    (str(album.id))
+                    for album in self.client.get_account_albums('me')}
+
+        except ImgurClientError as e:
+            self.trayIcon.showMessage(str(e.status_code), str(e.error_message))
 
     def album(self, default, path=''):
         if "imgshare" in self.albums and default:
@@ -32,116 +36,118 @@ class OptionsWindow(QWidget):
             return path
 
     def initUI(self):
-        self.center()
-        self.setWindowTitle('Options')
-        # Grid for checkbox options
-        set_header = QLabel('Settings')
-        set_header.setObjectName('settings')  # In order to customize style in stylesheet
+        if self.layout() == None:
+            self.center()
+            self.setWindowTitle('Options')
+            # Grid for checkbox options
+            set_header = QLabel('Settings')
+            set_header.setObjectName('settings')  # In order to customize style in stylesheet
 
-        pref_header = QLabel('Preferences')
-        pref_header.setObjectName('preferences')
+            pref_header = QLabel('Preferences')
+            pref_header.setObjectName('preferences')
 
-        set_dir = QLabel('Set Screenshot Directory:')
-        set_album = QLabel('Set imgur Album:')
+            set_dir = QLabel('Set Screenshot Directory:')
+            set_album = QLabel('Set imgur Album:')
 
-        cb_click_send = QCheckBox('Click Balloon to Send to Clipboard')
-        cb_click_send.toggle()
+            cb_click_send = QCheckBox('Click Balloon to Copy Image Link')
+            cb_click_send.toggle()
 
-        cb_no_click_send = QCheckBox('Never Send to Clipboard')
-        cb_new_tab = QCheckBox('Open Image in Browser')
-        cb_auto_send = QCheckBox('Auto-send to Clipboard')
-        cb_launch_start = QCheckBox('Launch on Start up')
+            cb_no_click_send = QCheckBox('Never Copy Image Link')
+            cb_new_tab = QCheckBox('Open Image in Browser')
+            cb_auto_send = QCheckBox('Automatically Copy Image Link')
+            cb_launch_start = QCheckBox('Launch on Start up')
 
-        dir_field = QLineEdit()
-        album_choice = QComboBox()
-        for album_name in self.albums.keys():
-            album_choice.addItem(album_name)
+            dir_field = QLineEdit()
+            album_choice = QComboBox()
+            for album_name in self.albums.keys():
+                album_choice.addItem(album_name)
 
-        check_box_layout = QGridLayout()
-        check_box_layout.addWidget(set_header, 0, 0)
-        check_box_layout.addWidget(cb_click_send, 1, 0)
-        check_box_layout.addWidget(cb_no_click_send, 1, 1)
-        check_box_layout.addWidget(cb_new_tab, 1, 2)
-        check_box_layout.addWidget(cb_auto_send, 2, 0)
-        check_box_layout.addWidget(cb_launch_start, 2, 1)
+            check_box_layout = QGridLayout()
+            check_box_layout.addWidget(set_header, 0, 0)
+            check_box_layout.addWidget(cb_click_send, 1, 0)
+            check_box_layout.addWidget(cb_no_click_send, 1, 1)
+            check_box_layout.addWidget(cb_new_tab, 1, 2)
+            check_box_layout.addWidget(cb_auto_send, 2, 0)
+            check_box_layout.addWidget(cb_launch_start, 2, 1)
 
-        check_box_layout.addWidget(pref_header, 3, 0)
-        check_box_layout.addWidget(set_dir, 4, 0)
-        check_box_layout.addWidget(dir_field, 5, 0)
-        check_box_layout.addWidget(set_album, 4, 1)
-        check_box_layout.addWidget(album_choice, 5, 1)
-        ok_button = QPushButton("Ok")
-        cancel_button = QPushButton("Cancel")
+            check_box_layout.addWidget(pref_header, 3, 0)
+            check_box_layout.addWidget(set_dir, 4, 0)
+            check_box_layout.addWidget(dir_field, 5, 0)
+            check_box_layout.addWidget(set_album, 4, 1)
+            check_box_layout.addWidget(album_choice, 5, 1)
+            ok_button = QPushButton("Ok")
+            cancel_button = QPushButton("Cancel")
 
-        # Window Layout
-        hbox = QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(ok_button)
-        hbox.addWidget(cancel_button)
+            # Window Layout
+            hbox = QHBoxLayout()
+            hbox.addStretch(1)
+            hbox.addWidget(ok_button)
+            hbox.addWidget(cancel_button)
 
-        vbox = QVBoxLayout()
-        vbox.addLayout(check_box_layout)
-        vbox.addLayout(hbox)
+            vbox = QVBoxLayout()
+            vbox.addLayout(check_box_layout)
+            vbox.addLayout(hbox)
 
-        self.setLayout(vbox)
+            self.setLayout(vbox)
 
-        # album_list = QListWidget()
-        # album_list.addItems(list(self.albums.keys()))
+            # album_list = QListWidget()
+            # album_list.addItems(list(self.albums.keys()))
 
-        self.setStyleSheet("""
-            QWidget {
-                background-color: rgb(50,50,50);
-            }
-            QLineEdit {
-                border-color: 1px white;
-                border-radius: 3px;
-                padding: 0 8px;
-                selection-color: #85BF25;
-                background-color: white;
-            }
-             QComboBox {
-                border: 1px black;
-                border-radius: 3px;
-                padding: 1px 18px 1px 3px;
-                min-width: 6em;
-            }
-            QComboBox::drop-down {
-                width: 15px;
-            }
-            QLabel#preferences {
-                color: #85BF25;
-                font: bold 14px;
-            }
-            QLabel#settings {
-                color: #85BF25;
-                font: bold 14px;
-            }
-            QLabel {
-                color: white;
-            }
-            QComboBox {
-                background-color: white;
-            }
-            QLabel#set_header {
-                color: white;
-                font: bold 14px;
-            }
-            QCheckBox {
-                color: white;
-            }
-            QListWidget {
-                color: white;
-            }
-            QPushButton {
-                background-color: rgb(50,50,50);
-                border-color: solid black;
-                border-width: 2px;
-                color: rgb(255,255,255);
-                font: bold 14px;
-            }
-            """)
-
-        self.show()
+            self.setStyleSheet("""
+                QWidget {
+                    background-color: rgb(50,50,50);
+                }
+                QLineEdit {
+                    border-color: 1px white;
+                    border-radius: 3px;
+                    padding: 0 8px;
+                    selection-color: #85BF25;
+                    background-color: white;
+                }
+                 QComboBox {
+                    border: 1px black;
+                    border-radius: 3px;
+                    padding: 1px 18px 1px 3px;
+                    min-width: 6em;
+                }
+                QComboBox::drop-down {
+                    width: 15px;
+                }
+                QLabel#preferences {
+                    color: #85BF25;
+                    font: bold 14px;
+                }
+                QLabel#settings {
+                    color: #85BF25;
+                    font: bold 14px;
+                }
+                QLabel {
+                    color: white;
+                }
+                QComboBox {
+                    background-color: white;
+                }
+                QLabel#set_header {
+                    color: white;
+                    font: bold 14px;
+                }
+                QCheckBox {
+                    color: white;
+                }
+                QListWidget {
+                    color: white;
+                }
+                QPushButton {
+                    background-color: rgb(50,50,50);
+                    border-color: solid black;
+                    border-width: 2px;
+                    color: rgb(255,255,255);
+                    font: bold 14px;
+                }
+                """)
+            self.show()
+        else:
+            self.activateWindow()
 
     def center(self):
         qr = self.frameGeometry()
