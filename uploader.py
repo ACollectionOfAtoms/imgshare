@@ -14,7 +14,6 @@ class Uploader:
         self.trayIcon = trayIcon
         self.album = None
         self.album = self.options.album(default=True)
-
         self.link = ''
 
     def upload(self, path):
@@ -38,7 +37,6 @@ class Uploader:
 
             if self.trayIcon.messageClicked:
                 self.to_clipboard()
-                self.showMessage('Link Copied', 'imgur link image has been sent to clipboard.')
 
         except ImgurClientError as e:
             self.trayIcon.showMessage(str(e.status_code), str(e.error_message))

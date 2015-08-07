@@ -3,7 +3,6 @@
 
 from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QGridLayout,
                              QLabel, QPushButton, QLineEdit, QComboBox)
-from PyQt5.QtGui import QIcon
 
 
 class OptionsWindow(QWidget):
