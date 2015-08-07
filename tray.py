@@ -45,6 +45,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
 
         menu.addAction(sendAction)
         menu.addAction(optAction)
+        menu.addSeparator()
         menu.addAction(exitAction)
         self.setContextMenu(menu)
 

@@ -8,7 +8,7 @@ from imgurpython.helpers.error import ImgurClientError
 
 
 class Uploader:
-    def __init__(self, client, options, trayIcon):
+    def __init__(self, client, options, trayIcon, auto=True):
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
@@ -32,17 +32,20 @@ class Uploader:
                     }
             image = self.client.upload_from_path(path, config=config, anon=False)
             self.link = image['link']
-
             self.trayIcon.showMessage('Upload Complete', self.link, 0)
-
-            if self.trayIcon.messageClicked:
-                self.to_clipboard()
+            self.to_clipboard()
 
         except ImgurClientError as e:
-            self.trayIcon.showMessage(str(e.status_code), str(e.error_message))
+            self.trayIcon.showMessage("Upload Error!", "\"" + str(e.error_message + "\""))
 
     def to_clipboard(self):
         if self.link == '':
             self.trayIcon.showMessage('Nothing to Send To Clipboard', 'You haven\'t taken a picture yet!', 0)
         else:
             pyperclip.copy(self.link)
+
+    def message_clicked(self):
+        self.to_clipboard()
+        self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
+        self.trayIcon.messageClicked.disconnect()
+
