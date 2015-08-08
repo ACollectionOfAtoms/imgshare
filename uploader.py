@@ -8,38 +8,42 @@ from imgurpython.helpers.error import ImgurClientError
 
 
 class Uploader:
-    def __init__(self, client, options, trayIcon, auto=False):
+    def __init__(self, client, options, trayIcon, auto=False, never_copy=False):
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
         self.auto = auto
+        self.never_copy = never_copy
+
+        if self.never_copy:
+            self.auto = False
 
         self.album = None
         self.album = self.options.album(default=True)
         self.link = ''
 
-        if not self.auto:
+        if not self.auto and not self.never_copy:
             self.trayIcon.messageClicked.connect(self.message_click_copy)
 
     def upload(self, path):
         try:
             self.trayIcon.showMessage('Uploading', '...', 0)
             path_list = path.split('/')
-            screen_name = path_list[-1]
+            photo_name = path_list[-1]
             dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             album = self.album
             config = {
                     'album': album,
-                    'name': screen_name,
-                    'title': screen_name,
+                    'name': photo_name,
+                    'title': photo_name,
                     'description': 'Uploaded with imgshare on {0}'.format(dt)
                     }
             image = self.client.upload_from_path(path, config=config, anon=False)
             self.link = image['link']
             self.trayIcon.showMessage('Upload Complete', self.link, 0)
 
-            if self.auto:
+            if self.auto and not self.never_copy:
                 self.to_clipboard()
                 self.copy_notification()
 
