@@ -15,6 +15,7 @@ class Uploader:
         self.album = None
         self.album = self.options.album(default=True)
         self.link = ''
+        self.trayIcon.messageClicked.connect(self.copy_notification)
 
     def upload(self, path):
         try:
@@ -33,7 +34,6 @@ class Uploader:
             image = self.client.upload_from_path(path, config=config, anon=False)
             self.link = image['link']
             self.trayIcon.showMessage('Upload Complete', self.link, 0)
-            self.to_clipboard()
 
         except ImgurClientError as e:
             self.trayIcon.showMessage("Upload Error!", "\"" + str(e.error_message + "\""))
@@ -44,8 +44,11 @@ class Uploader:
         else:
             pyperclip.copy(self.link)
 
-    def message_clicked(self):
-        self.to_clipboard()
-        self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
-        self.trayIcon.messageClicked.disconnect()
+    def copy_notification(self):
+        if self.link == '':
+            pass
+        else:
+            self.to_clipboard()
+            self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
+            self.trayIcon.messageClicked.connect(self.copy_notification)  # Needs to be reconnected! Strange.
 

@@ -60,6 +60,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
 
     def copy_last(self):
         self.scanner.loader.to_clipboard()
+        self.scanner.loader.copy_notification()
 
 
 def launch(client, icon):

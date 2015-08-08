@@ -13,8 +13,7 @@ class OptionsWindow(QWidget):
 
     def get_album_dict(self):
         try:
-            return {(str(album.title) if album.title else 'untitled'):
-                    (str(album.id))
+            return {(str(album.title) if album.title else 'untitled'): (str(album.id))
                     for album in self.client.get_account_albums('me')}
 
         except ImgurClientError as e:
