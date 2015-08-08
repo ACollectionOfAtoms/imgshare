@@ -3,17 +3,19 @@
 
 from datetime import datetime
 from options import OptionsWindow
+from webbrowser import open_new_tab
 import pyperclip
 from imgurpython.helpers.error import ImgurClientError
 
 
 class Uploader:
-    def __init__(self, client, options, trayIcon, auto=False, never_copy=False):
+    def __init__(self, client, options, trayIcon, auto=False, never_copy=False, auto_open=True):
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
         self.auto = auto
         self.never_copy = never_copy
+        self.auto_open = auto_open
 
         if self.never_copy:
             self.auto = False
@@ -46,6 +48,9 @@ class Uploader:
             if self.auto and not self.never_copy:
                 self.to_clipboard()
                 self.copy_notification()
+
+            if self.auto_open:
+                open_new_tab(self.link)
 
         except ImgurClientError as e:
             self.trayIcon.showMessage("Upload Error!", "\"" + str(e.error_message + "\""))
