@@ -12,11 +12,13 @@ class Uploader:
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
+        self.auto = auto
+
         self.album = None
         self.album = self.options.album(default=True)
         self.link = ''
 
-        if not auto:
+        if not self.auto:
             self.trayIcon.messageClicked.connect(self.message_click_copy)
 
     def upload(self, path):
@@ -36,6 +38,10 @@ class Uploader:
             image = self.client.upload_from_path(path, config=config, anon=False)
             self.link = image['link']
             self.trayIcon.showMessage('Upload Complete', self.link, 0)
+
+            if self.auto:
+                self.to_clipboard()
+                self.copy_notification()
 
         except ImgurClientError as e:
             self.trayIcon.showMessage("Upload Error!", "\"" + str(e.error_message + "\""))
