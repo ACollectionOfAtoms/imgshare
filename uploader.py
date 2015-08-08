@@ -8,14 +8,16 @@ from imgurpython.helpers.error import ImgurClientError
 
 
 class Uploader:
-    def __init__(self, client, options, trayIcon, auto=True):
+    def __init__(self, client, options, trayIcon, auto=False):
         self.client = client
         self.options = options
         self.trayIcon = trayIcon
         self.album = None
         self.album = self.options.album(default=True)
         self.link = ''
-        self.trayIcon.messageClicked.connect(self.copy_notification)
+
+        if not auto:
+            self.trayIcon.messageClicked.connect(self.message_click_copy)
 
     def upload(self, path):
         try:
@@ -45,10 +47,13 @@ class Uploader:
             pyperclip.copy(self.link)
 
     def copy_notification(self):
+        self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
+
+    def message_click_copy(self):  # Can be infinite loop if user continues to click. But who would do that?!
         if self.link == '':
             pass
         else:
             self.to_clipboard()
-            self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
-            self.trayIcon.messageClicked.connect(self.copy_notification)  # Needs to be reconnected! Strange.
+            self.copy_notification()
+            self.trayIcon.messageClicked.connect(self.message_click_copy)  # Needs to be reconnected! May be OSX Qt Bug.
 

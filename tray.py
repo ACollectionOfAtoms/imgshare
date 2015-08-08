@@ -5,7 +5,6 @@ import sys
 import threading
 import psutil
 import os
-import pyperclip
 from scanner import Scanner
 from PyQt5 import QtGui, QtWidgets
 from options import OptionsWindow
@@ -59,8 +58,11 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.options.initUI()
 
     def copy_last(self):
-        self.scanner.loader.to_clipboard()
-        self.scanner.loader.copy_notification()
+        if self.scanner.loader.link == '':
+            self.scanner.loader.to_clipboard()
+        else:
+            self.scanner.loader.to_clipboard()
+            self.scanner.loader.copy_notification()
 
 
 def launch(client, icon):
