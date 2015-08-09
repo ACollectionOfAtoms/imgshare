@@ -9,7 +9,7 @@ from imgurpython.helpers.error import ImgurClientError
 
 
 class Uploader:
-    def __init__(self, client, options, trayIcon, auto=False, never_copy=False, auto_open=True):
+    def __init__(self, client, options, trayIcon, auto=False, never_copy=False, auto_open=False):
         self.client = client
         self.options = options
         self.trayIcon = trayIcon

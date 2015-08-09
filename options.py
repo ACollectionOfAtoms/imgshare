@@ -10,6 +10,7 @@ class OptionsWindow(QWidget):
         super(OptionsWindow, self).__init__()
         self.client = client
         self.albums = self.get_album_dict()
+        self.scan_dir = ''
 
     def get_album_dict(self):
         try:
@@ -62,6 +63,8 @@ class OptionsWindow(QWidget):
             cb_launch_start = QCheckBox('Launch on Start up')
 
             dir_field = QLineEdit()
+            dir_field.insert(self.scan_dir)
+
             album_choice = QComboBox()
             for album_name in self.albums.keys():
                 album_choice.addItem(album_name)

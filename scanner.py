@@ -16,13 +16,15 @@ class Scanner:
 
         self.screenshot_path = ''
         self.loader = Uploader(self.client, self.options, self.trayIcon)
-        self.desktop = os.path.expanduser('~') + '/Desktop/'
+        self.scan_path = os.path.expanduser('~') + '/Desktop/'
+        self.options.scan_dir = self.scan_path
+
         self.num_files_in_dir = len(self._dsk_dir())
         self.stop_event = threading.Event()
         self.regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){1,2}\sat\s(\d){1,2}\.(\d){1,2}\.(\d){1,2}\s(PM|AM)\.(\w){3}'
 
     def _dsk_dir(self):
-        dir_list = [f for f in os.listdir(self.desktop) if f[0] != '.']
+        dir_list = [f for f in os.listdir(self.scan_path) if f[0] != '.']
         return dir_list
 
     def _check_name(self, name):
@@ -53,7 +55,7 @@ class Scanner:
             if self._check_name(new_file):
                 reg_object = re.search(self.regex, new_file)
                 new_file = reg_object.group()
-                self.screenshot_path = self.desktop + new_file
+                self.screenshot_path = self.scan_path + new_file
 
                 self.loader.upload(self.screenshot_path)
                 self.scan(self.stop_event)
