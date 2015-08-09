@@ -3,6 +3,8 @@
 
 from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QGridLayout,
                              QLabel, QPushButton, QLineEdit, QComboBox)
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 
 
 class OptionsWindow(QWidget):
@@ -54,13 +56,30 @@ class OptionsWindow(QWidget):
             set_dir = QLabel('Set Screenshot Directory:')
             set_album = QLabel('Set imgur Album:')
 
-            cb_click_send = QCheckBox('Click Balloon to Copy Image Link')
-            cb_click_send.toggle()
+            cb_click_send = QCheckBox('Click Balloon to Copy Image Link', self)
+            cb_click_send.setChecked(True)
 
-            cb_no_click_send = QCheckBox('Never Copy Image Link')
+            cb_no_copy = QCheckBox('Never Copy Image Link')
             cb_new_tab = QCheckBox('Open Image in Browser')
             cb_auto_send = QCheckBox('Automatically Copy Image Link')
             cb_launch_start = QCheckBox('Launch on Start up')
+
+            cb_click_send.stateChanged.connect(lambda: cb_no_copy.setDisabled(cb_no_copy.isEnabled()))
+            cb_click_send.stateChanged.connect(lambda: cb_no_copy.setChecked(cb_no_copy.isChecked()))
+            cb_click_send.stateChanged.connect(lambda: cb_auto_send.setDisabled(cb_auto_send.isEnabled()))
+            cb_click_send.stateChanged.connect(lambda: cb_auto_send.setChecked(cb_auto_send.isChecked()))
+
+            cb_click_send.stateChanged.emit(1)
+
+            cb_no_copy.stateChanged.connect(lambda: cb_click_send.setDisabled(cb_click_send.isEnabled()))
+            cb_no_copy.stateChanged.connect(lambda: cb_click_send.setChecked(cb_click_send.isChecked()))
+            cb_no_copy.stateChanged.connect(lambda: cb_auto_send.setDisabled(cb_auto_send.isEnabled()))
+            cb_no_copy.stateChanged.connect(lambda: cb_auto_send.setChecked(cb_auto_send.isChecked()))
+
+            cb_auto_send.stateChanged.connect(lambda: cb_click_send.setDisabled(cb_click_send.isEnabled()))
+            cb_auto_send.stateChanged.connect(lambda: cb_click_send.setChecked(cb_click_send.isChecked()))
+            cb_auto_send.stateChanged.connect(lambda: cb_no_copy.setDisabled(cb_no_copy.isEnabled()))
+            cb_auto_send.stateChanged.connect(lambda: cb_no_copy.setChecked(cb_no_copy.isChecked()))
 
             dir_field = QLineEdit()
             dir_field.insert(self.scan_dir)
@@ -72,7 +91,7 @@ class OptionsWindow(QWidget):
             check_box_layout = QGridLayout()
             check_box_layout.addWidget(set_header, 0, 0)
             check_box_layout.addWidget(cb_click_send, 1, 0)
-            check_box_layout.addWidget(cb_no_click_send, 1, 1)
+            check_box_layout.addWidget(cb_no_copy, 1, 1)
             check_box_layout.addWidget(cb_new_tab, 1, 2)
             check_box_layout.addWidget(cb_auto_send, 2, 0)
             check_box_layout.addWidget(cb_launch_start, 2, 1)
@@ -153,6 +172,7 @@ class OptionsWindow(QWidget):
                 }
                 """)
             self.show()
+
         else:
             self.show()
 
