@@ -3,16 +3,18 @@
 
 from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QGridLayout,
                              QLabel, QPushButton, QLineEdit, QComboBox)
-from PyQt5 import QtGui
-from PyQt5 import QtWidgets
+from uploader import Uploader
 
 
 class OptionsWindow(QWidget):
-    def __init__(self, client):
+    def __init__(self, client, scanner, trayIcon):
         super(OptionsWindow, self).__init__()
         self.client = client
+        self.scanner = scanner
+        self.loader = self.scanner.loader
+        self.trayIcon = trayIcon
         self.albums = self.get_album_dict()
-        self.scan_dir = ''
+        self.scan_dir = self.scanner.scan_path
 
     def get_album_dict(self):
         try:
@@ -47,11 +49,11 @@ class OptionsWindow(QWidget):
             self.center()
             self.setWindowTitle('Options')
             # Grid for checkbox options
-            set_header = QLabel('Settings')
-            set_header.setObjectName('settings')  # In order to customize style in stylesheet
+            set_header = QLabel('Preferences')
+            set_header.setObjectName('preferences')  # In order to customize style in stylesheet
 
-            pref_header = QLabel('Preferences')
-            pref_header.setObjectName('preferences')
+            pref_header = QLabel('Settings')
+            pref_header.setObjectName('settings')
 
             set_dir = QLabel('Set Screenshot Directory:')
             set_album = QLabel('Set imgur Album:')
@@ -60,26 +62,26 @@ class OptionsWindow(QWidget):
             cb_click_send.setChecked(True)
 
             cb_no_copy = QCheckBox('Never Copy Image Link')
-            cb_new_tab = QCheckBox('Open Image in Browser')
+            cb_auto_open = QCheckBox('Open Image in Browser')
             cb_auto_send = QCheckBox('Automatically Copy Image Link')
             cb_launch_start = QCheckBox('Launch on Start up')
 
-            cb_click_send.stateChanged.connect(lambda: cb_no_copy.setDisabled(cb_no_copy.isEnabled()))
-            cb_click_send.stateChanged.connect(lambda: cb_no_copy.setChecked(cb_no_copy.isChecked()))
+            cb_no_copy.setChecked(True)
+            cb_no_copy.setDisabled(True)
+
+            cb_click_send.stateChanged.connect(lambda: cb_no_copy.setChecked(not cb_no_copy.isChecked()))
             cb_click_send.stateChanged.connect(lambda: cb_auto_send.setDisabled(cb_auto_send.isEnabled()))
             cb_click_send.stateChanged.connect(lambda: cb_auto_send.setChecked(cb_auto_send.isChecked()))
+            cb_click_send.stateChanged.connect(self.toggle_click)
 
             cb_click_send.stateChanged.emit(1)
 
-            cb_no_copy.stateChanged.connect(lambda: cb_click_send.setDisabled(cb_click_send.isEnabled()))
-            cb_no_copy.stateChanged.connect(lambda: cb_click_send.setChecked(cb_click_send.isChecked()))
-            cb_no_copy.stateChanged.connect(lambda: cb_auto_send.setDisabled(cb_auto_send.isEnabled()))
-            cb_no_copy.stateChanged.connect(lambda: cb_auto_send.setChecked(cb_auto_send.isChecked()))
-
             cb_auto_send.stateChanged.connect(lambda: cb_click_send.setDisabled(cb_click_send.isEnabled()))
             cb_auto_send.stateChanged.connect(lambda: cb_click_send.setChecked(cb_click_send.isChecked()))
-            cb_auto_send.stateChanged.connect(lambda: cb_no_copy.setDisabled(cb_no_copy.isEnabled()))
-            cb_auto_send.stateChanged.connect(lambda: cb_no_copy.setChecked(cb_no_copy.isChecked()))
+            cb_auto_send.stateChanged.connect(lambda: cb_no_copy.setChecked(not cb_no_copy.isChecked()))
+            cb_auto_send.stateChanged.connect(self.toggle_auto_upload)
+
+            cb_auto_open.stateChanged.connect(self.toggle_auto_open)
 
             dir_field = QLineEdit()
             dir_field.insert(self.scan_dir)
@@ -92,7 +94,7 @@ class OptionsWindow(QWidget):
             check_box_layout.addWidget(set_header, 0, 0)
             check_box_layout.addWidget(cb_click_send, 1, 0)
             check_box_layout.addWidget(cb_no_copy, 1, 1)
-            check_box_layout.addWidget(cb_new_tab, 1, 2)
+            check_box_layout.addWidget(cb_auto_open, 1, 2)
             check_box_layout.addWidget(cb_auto_send, 2, 0)
             check_box_layout.addWidget(cb_launch_start, 2, 1)
 
@@ -115,10 +117,6 @@ class OptionsWindow(QWidget):
             vbox.addLayout(hbox)
 
             self.setLayout(vbox)
-
-            # album_list = QListWidget()
-            # album_list.addItems(list(self.albums.keys()))
-
             self.setStyleSheet("""
                 QWidget {
                     background-color: rgb(50,50,50);
@@ -175,6 +173,19 @@ class OptionsWindow(QWidget):
 
         else:
             self.show()
+
+    # Both Scanner and Options objects connect to loader with new settings.
+    def toggle_click(self):
+        bool_switch = not self.loader.click
+        self.scanner.loader = self.loader = Uploader(self.client, self.trayIcon, click=bool_switch)
+
+    def toggle_auto_upload(self):
+        bool_switch = not self.loader.auto
+        self.scanner.loader = self.loader = Uploader(self.client, self.trayIcon, auto=bool_switch)
+
+    def toggle_auto_open(self):  # Doesn't affect upload process; no need to create new instance.
+        bool_switch = not self.loader.auto_open
+        self.loader.auto_open = bool_switch
 
     def center(self):
         qr = self.frameGeometry()

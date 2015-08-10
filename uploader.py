@@ -2,30 +2,24 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from options import OptionsWindow
 from webbrowser import open_new_tab
 import pyperclip
 from imgurpython.helpers.error import ImgurClientError
 
 
 class Uploader:
-    def __init__(self, client, options, trayIcon, auto=False, never_copy=False, auto_open=False):
+    def __init__(self, client, trayIcon, click=False, auto=False, auto_open=False):
         self.client = client
-        self.options = options
         self.trayIcon = trayIcon
         self.auto = auto
-        self.never_copy = never_copy
         self.auto_open = auto_open
-
-        if self.never_copy:
-            self.auto = False
+        self.click = click
 
         self.album = None
-        self.album = self.options.album(default=True)
         self.link = ''
 
-        if not self.auto and not self.never_copy:
-            self.trayIcon.messageClicked.connect(self.message_click_copy)
+        if self.click:
+            self.trayIcon.messageClicked.connect(self.message_click_copy)  # Needs to be connected here! Qt Bug?!
 
     def upload(self, path):
         try:
@@ -45,7 +39,7 @@ class Uploader:
             self.link = image['link']
             self.trayIcon.showMessage('Upload Complete', self.link, 0)
 
-            if self.auto and not self.never_copy:
+            if self.auto:
                 self.to_clipboard()
                 self.copy_notification()
 
@@ -71,4 +65,3 @@ class Uploader:
             self.to_clipboard()
             self.copy_notification()
             self.trayIcon.messageClicked.connect(self.message_click_copy)  # Needs to be reconnected! May be OSX Qt Bug.
-
