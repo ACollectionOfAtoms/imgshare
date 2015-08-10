@@ -28,7 +28,7 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 ### Configurations
 User options soon to come. 
 
-![Options](http://i.imgur.com/64U8ao5.png)
+![Options](http://i.imgur.com/U75MtXF.png)
 
 ###Next steps:
   * Implement Options window functionality
