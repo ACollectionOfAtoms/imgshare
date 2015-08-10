@@ -87,8 +87,8 @@ class OptionsWindow(QWidget):
             dir_field.insert(self.scan_dir)
 
             album_choice = QComboBox()
-            for album_name in self.albums.keys():
-                album_choice.addItem(album_name)
+            album_list = self.albums.keys()
+            album_choice.addItems(album_list)
 
             check_box_layout = QGridLayout()
             check_box_layout.addWidget(set_header, 0, 0)
@@ -170,7 +170,6 @@ class OptionsWindow(QWidget):
                 }
                 """)
             self.show()
-
         else:
             self.show()
 

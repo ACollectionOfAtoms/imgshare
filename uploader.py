@@ -9,6 +9,7 @@ from imgurpython.helpers.error import ImgurClientError
 
 class Uploader:
     def __init__(self, client, trayIcon, click=False, auto=False, auto_open=False):
+        """  default loader is set to click=True when loader is initialized by Options object """
         self.client = client
         self.trayIcon = trayIcon
         self.auto = auto
@@ -58,7 +59,7 @@ class Uploader:
     def copy_notification(self):
         self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
 
-    def message_click_copy(self):  # Can be infinite loop if user continues to click. But who would do that?!
+    def message_click_copy(self):  # Can be infinite loop if user continues to click. But who would do that?! (fix this)
         if self.link == '':
             pass
         else:
