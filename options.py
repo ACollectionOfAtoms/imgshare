@@ -18,7 +18,7 @@ class OptionsWindow(QWidget):
 
     def get_album_dict(self):
         try:
-            return {(str(album.title) if album.title else 'untitled'): (str(album.id))
+            return {(str(album.title) if album.title else 'Main'): (str(album.id))
                     for album in self.client.get_account_albums('me')}
 
         except ImgurClientError as e:
@@ -26,23 +26,6 @@ class OptionsWindow(QWidget):
             err_msg = str(e.error_message)
             self.trayIcon.showMessage(stat_code, "Error: " + "\"" + err_msg + "\"" +
                                       "\nimgur is having issues! You may want to restart.")
-
-    def album(self, default, path=''):
-        if "imgshare" in self.albums and default:
-            self.album = self.albums["imgshare"]
-
-        elif default:
-            config = {
-                'title': "imgshare",
-                'description': "Images Uploaded with the imgshare app",
-                'privacy': "hidden",
-                'layout': "grid"
-            }
-            self.client.create_album(config)
-            self.albums = self.get_album_dict()
-            return self.albums["imgshare"]
-        else:
-            return path
 
     def initUI(self):
         if self.layout() is None:
@@ -87,8 +70,15 @@ class OptionsWindow(QWidget):
             dir_field.insert(self.scan_dir)
 
             album_choice = QComboBox()
-            album_list = self.albums.keys()
+            album_list = [alb for alb in self.albums.keys() if alb != 'Main']
             album_choice.addItems(album_list)
+
+            album_choice.insertSeparator(len(album_list) + 1)
+            album_choice.insertItem(len(album_list) + 2, 'Main')
+            album_choice.setCurrentIndex(len(album_list) + 1)
+
+            album_choice.activated[str].connect(self.set_album)
+
 
             check_box_layout = QGridLayout()
             check_box_layout.addWidget(set_header, 0, 0)
@@ -185,6 +175,9 @@ class OptionsWindow(QWidget):
     def toggle_auto_open(self):  # Doesn't affect upload process; no need to create new instance.
         bool_switch = not self.loader.auto_open
         self.loader.auto_open = bool_switch
+
+    def set_album(self, album):
+        self.loader.album = self.albums[album]
 
     def center(self):
         qr = self.frameGeometry()
