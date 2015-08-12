@@ -22,12 +22,13 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 ![Balloon](http://i.imgur.com/njKMiRD.png)
 
 ### Configurations
+For now, all options are saved for the session only. 
 
 ![Options](http://i.imgur.com/NZehG4g.png)
 
 ###Next steps:
-  * Implement Options window functionality
-  * Create OSX app for alpha release?
+  * Create OSX app for alpha release.
+  * Implement launch on start up and save user settings.
   * Future: allow user to easily upload images on their computer or the web through right-click functionality.
 
 ##Eager to use the pre-release?
