@@ -6,10 +6,6 @@
 For Mac OSX >= 10.8 , this application automatically uploads screen caps (cmnd+shift+4) to imgur, and provides a link to the image.
 
 During my college years I found it tedious to share photos of math/physics/chemistry problems with friends. This expedites the process. There are (probably) apps that already do this but...I'm also completing this project for my own edification! 
-
-<h2 align="center">Progess so far</h2>
-The program is functional but more options will be added soon.
-
 ###Logging in
 The API requires the user to retrieve a PIN that is specifically made for the user and the registered application. The "Get PIN" button launches the users browser and directs them to retrieve this PIN.
 
@@ -26,9 +22,8 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 ![Balloon](http://i.imgur.com/njKMiRD.png)
 
 ### Configurations
-User options soon to come. 
 
-![Options](http://i.imgur.com/U75MtXF.png)
+![Options](http://i.imgur.com/NZehG4g.png)
 
 ###Next steps:
   * Implement Options window functionality
