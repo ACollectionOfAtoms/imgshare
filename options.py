@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QGridLayout,
-                             QLabel, QPushButton, QLineEdit, QComboBox)
+                             QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QFrame)
 from uploader import Uploader
 
 
@@ -32,11 +32,13 @@ class OptionsWindow(QWidget):
             self.center()
             self.setWindowTitle('Options')
             # Grid for checkbox options
-            set_header = QLabel('Preferences')
-            set_header.setObjectName('preferences')  # In order to customize style in stylesheet
+            pref_header = QLabel('Preferences')
+            pref_header.setObjectName('preferences')  # In order to customize style in stylesheet
 
-            pref_header = QLabel('Settings')
-            pref_header.setObjectName('settings')
+            set_header = QLabel('Settings')
+            set_header.setObjectName('settings')
+            h_line = QFrame()
+            h_line.setFrameShape(QFrame.HLine)
 
             set_dir = QLabel('Set Screenshot Directory:')
             set_album = QLabel('Set imgur Album:')
@@ -79,31 +81,36 @@ class OptionsWindow(QWidget):
 
             album_choice.activated[str].connect(self.set_album)
 
+            set_dir_button = QPushButton("Set")
+            set_dir_button.clicked.connect(lambda: self.select_dir(dir_field))
+            set_dir_button.setMaximumWidth(80)
 
-            check_box_layout = QGridLayout()
-            check_box_layout.addWidget(set_header, 0, 0)
-            check_box_layout.addWidget(cb_click_send, 1, 0)
-            check_box_layout.addWidget(cb_no_copy, 1, 1)
-            check_box_layout.addWidget(cb_auto_open, 1, 2)
-            check_box_layout.addWidget(cb_auto_send, 2, 0)
-            check_box_layout.addWidget(cb_launch_start, 2, 1)
+            options_layout = QGridLayout()
+            options_layout.addWidget(pref_header, 0, 0)
+            options_layout.addWidget(cb_click_send, 1, 0)
+            options_layout.addWidget(cb_auto_send, 2, 0)
+            options_layout.addWidget(cb_no_copy, 3, 0)
+            options_layout.addWidget(cb_auto_open, 4, 0)
+            options_layout.addWidget(h_line, 5, 0)
+            options_layout.addWidget(cb_launch_start, 6, 0)
 
-            check_box_layout.addWidget(pref_header, 3, 0)
-            check_box_layout.addWidget(set_dir, 4, 0)
-            check_box_layout.addWidget(dir_field, 5, 0)
-            check_box_layout.addWidget(set_album, 4, 1)
-            check_box_layout.addWidget(album_choice, 5, 1)
+            options_layout.addWidget(set_header, 7, 0)
+            options_layout.addWidget(set_dir, 8, 0)
+            options_layout.addWidget(dir_field, 9, 0)
+            options_layout.addWidget(set_dir_button, 10, 0)
+            options_layout.addWidget(set_album, 11, 0)
+            options_layout.addWidget(album_choice, 12, 0)
             ok_button = QPushButton("Ok")
             cancel_button = QPushButton("Cancel")
 
             # Window Layout
             hbox = QHBoxLayout()
-            hbox.addStretch(1)
             hbox.addWidget(ok_button)
             hbox.addWidget(cancel_button)
+            hbox.addStretch(1)
 
             vbox = QVBoxLayout()
-            vbox.addLayout(check_box_layout)
+            vbox.addLayout(options_layout)
             vbox.addLayout(hbox)
 
             self.setLayout(vbox)
@@ -118,11 +125,23 @@ class OptionsWindow(QWidget):
                     selection-color: #85BF25;
                     background-color: white;
                 }
-                 QComboBox {
+                QComboBox {
+                    color: black;
+                    background-color: white;
+                    selection-background-color: rgb(50,50,50);
+                    selection-color: #85BF25;
                     border: 1px black;
                     border-radius: 3px;
                     padding: 1px 18px 1px 3px;
                     min-width: 6em;
+                }
+                QComboBox QListView{
+                    color: white;
+                    border: 1px black;
+                    border-radius: 3px;
+                    padding: 1px 18px 1px 3px;
+                    min-width: 6em;
+                    border-color: #85BF25;
                 }
                 QComboBox::drop-down {
                     width: 15px;
@@ -137,9 +156,6 @@ class OptionsWindow(QWidget):
                 }
                 QLabel {
                     color: white;
-                }
-                QComboBox {
-                    background-color: white;
                 }
                 QLabel#set_header {
                     color: white;
@@ -156,7 +172,7 @@ class OptionsWindow(QWidget):
                     border-color: solid black;
                     border-width: 2px;
                     color: rgb(255,255,255);
-                    font: bold 14px;
+                    font: bold 12px;
                 }
                 """)
             self.show()
@@ -178,6 +194,11 @@ class OptionsWindow(QWidget):
 
     def set_album(self, album):
         self.loader.album = self.albums[album]
+
+    def select_dir(self, field):
+        str = QFileDialog.getExistingDirectory()
+        if str != '':
+            field.setText(str)
 
     def center(self):
         qr = self.frameGeometry()
