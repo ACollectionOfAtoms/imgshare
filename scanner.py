@@ -12,13 +12,16 @@ class Scanner:
     def __init__(self, client, trayIcon):
         self.client = client
         self.trayIcon = trayIcon
+        self.loader = Uploader(self.client, self.trayIcon)
 
         self.screenshot_path = ''
-        self.loader = Uploader(self.client, self.trayIcon)
         self.scan_path = os.path.expanduser('~') + '/Desktop/'
         self.files_in_dir = self.dir_list()
         self.stop_event = threading.Event()
         self.regex = 'Screen\sShot\s(\d){4}-(\d){2}-(\d){1,2}\sat\s(\d){1,2}\.(\d){1,2}\.(\d){1,2}\s(PM|AM)\.(\w){3}'
+
+        self.file_list_set_a = set(self.files_in_dir)
+        self.file_list_set_b = set(self.files_in_dir)
 
     def dir_list(self):
         d_list = [f for f in os.listdir(self.scan_path) if f[0] != '.']
@@ -39,20 +42,22 @@ class Scanner:
             return
 
         while len(self.dir_list()) <= len(self.files_in_dir) and not stop_event.isSet():
-            file_list_set_a = set(self.files_in_dir)
             pass
         else:
-            file_list_set_b = set(self.dir_list())
-            new_file = file_list_set_a ^ file_list_set_b
-            new_file = next(iter(new_file))
-            self.files_in_dir = self.dir_list()
-
-            if self._check_name(new_file):
-                reg_object = re.search(self.regex, new_file)
-                new_file = reg_object.group()
-                self.screenshot_path = self.scan_path + new_file
-
-                self.loader.upload(self.screenshot_path)
+            self.file_list_set_b = set(self.dir_list())
+            if len(self.file_list_set_a) == len(self.file_list_set_b):  # Catch if folder was changed
                 self.scan(self.stop_event)
             else:
-                self.scan(self.stop_event)
+                new_file = self.file_list_set_a ^ self.file_list_set_b
+                new_file = next(iter(new_file))
+                self.files_in_dir = self.dir_list()
+
+                if self._check_name(new_file):
+                    reg_object = re.search(self.regex, new_file)
+                    new_file = reg_object.group()
+                    self.screenshot_path = self.scan_path + new_file
+
+                    self.loader.upload(self.screenshot_path)
+                    self.scan(self.stop_event)
+                else:
+                    self.scan(self.stop_event)

@@ -180,6 +180,7 @@ class OptionsWindow(QWidget):
                 """)
             self.show()
         else:
+            self.activateWindow()
             self.show()
 
     # Both Scanner and Options objects connect to loader with new settings.
@@ -191,12 +192,12 @@ class OptionsWindow(QWidget):
         bool_switch = not self.loader.auto
         self.scanner.loader = self.loader = Uploader(self.client, self.trayIcon, auto=bool_switch)
 
-    def toggle_auto_open(self):  # A big buggy
+    def toggle_auto_open(self):
         bool_switch = not self.loader.auto_open
-        self.loader.auto_open = bool_switch
+        self.scanner.loader.auto_open = self.loader.auto_open = bool_switch
 
     def set_album(self, album):
-        self.loader.album = self.albums[album]
+        self.scanner.loader.album = self.loader.album = self.albums[album]
 
     def select_dir(self, field):
         path = QFileDialog.getExistingDirectory()
@@ -205,6 +206,8 @@ class OptionsWindow(QWidget):
             field.setText(path)
             self.scanner.scan_path = path
             self.scanner.files_in_dir = self.scanner.dir_list()
+            self.scanner.file_list_set_a = set(self.scanner.files_in_dir)
+            self.scanner.file_list_set_b = set(self.scanner.files_in_dir)
             with open(os.devnull, 'w') as nul:
                 subprocess.call(["defaults", "write", "com.apple.screencapture", "location", path])
                 subprocess.call(["killAll", "SystemUIServer"])

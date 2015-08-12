@@ -7,7 +7,7 @@ import psutil
 import os
 import subprocess
 from scanner import Scanner
-from PyQt5 import QtGui, QtWidgets
+from PyQt5 import QtWidgets
 from options import OptionsWindow
 
 
@@ -73,7 +73,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
 def launch(client, icon):
     app = QtWidgets.QApplication(sys.argv)
     w = QtWidgets.QWidget()
-    trayIcon = Tray(client, QtGui.QIcon(icon), w)
+    trayIcon = Tray(client, icon, w)
     trayIcon.show()
     trayIcon.showMessage("Log In Successful!", "Hello {} (~:".format(trayIcon.user), 0)
     sys.exit(app.exec_())
