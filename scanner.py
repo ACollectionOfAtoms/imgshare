@@ -47,6 +47,7 @@ class Scanner:
             self.file_list_set_b = set(self.dir_list())
             if len(self.file_list_set_a) == len(self.file_list_set_b):  # Catch if folder was changed
                 self.scan(self.stop_event)
+                pass
             else:
                 new_file = self.file_list_set_a ^ self.file_list_set_b
                 new_file = next(iter(new_file))

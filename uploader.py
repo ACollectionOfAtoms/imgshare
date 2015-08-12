@@ -66,3 +66,4 @@ class Uploader:
             self.to_clipboard()
             self.copy_notification()
             self.trayIcon.messageClicked.connect(self.message_click_copy)  # Needs to be reconnected! May be OSX Qt Bug.
+
