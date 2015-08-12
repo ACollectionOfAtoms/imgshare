@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, 
 from uploader import Uploader
 import subprocess
 import os
-import threading
 
 
 class OptionsWindow(QWidget):
@@ -54,6 +53,7 @@ class OptionsWindow(QWidget):
             cb_auto_send = QCheckBox('Automatically Copy Image Link')
             cb_launch_start = QCheckBox('Launch on Start up')
 
+            cb_launch_start.setDisabled(True)
             cb_no_copy.setChecked(True)
             cb_no_copy.setDisabled(True)
 
@@ -191,7 +191,7 @@ class OptionsWindow(QWidget):
         bool_switch = not self.loader.auto
         self.scanner.loader = self.loader = Uploader(self.client, self.trayIcon, auto=bool_switch)
 
-    def toggle_auto_open(self):  # Doesn't affect upload process; no need to create new instance.
+    def toggle_auto_open(self):  # A big buggy
         bool_switch = not self.loader.auto_open
         self.loader.auto_open = bool_switch
 

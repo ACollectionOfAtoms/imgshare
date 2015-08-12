@@ -5,6 +5,7 @@ import sys
 import threading
 import psutil
 import os
+import subprocess
 from scanner import Scanner
 from PyQt5 import QtGui, QtWidgets
 from options import OptionsWindow
@@ -47,6 +48,12 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.setContextMenu(menu)
 
     def appExit(self):
+        # Reset OSX Screenshot storage
+        with open(os.devnull, 'w') as nul:
+            path = os.path.expanduser('~') + '/Desktop/'
+            subprocess.call(["defaults", "write", "com.apple.screencapture", "location", path])
+            subprocess.call(["killAll", "SystemUIServer"])
+
         kill_proc_tree(me)
         self.stop_event.set()
         self.scanner.scan(self.stop_event)
