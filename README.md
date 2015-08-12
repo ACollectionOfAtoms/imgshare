@@ -9,12 +9,12 @@ During my college years I found it tedious to share photos of math/physics/chemi
 ###Logging in
 The API requires the user to retrieve a PIN that is specifically made for the user and the registered application. The "Get PIN" button launches the users browser and directs them to retrieve this PIN.
 
-![Logging in](http://i.imgur.com/Y4e2J7B.png)
+![Logging in](http://i.imgur.com/Chpm7Ea.png)
 
 ###Let it sit in the tray
 The program then sits in the tray awaiting the creation of a new screenshot.
 
-![Tray sittin'](http://i.imgur.com/74sKufs.png)
+![Tray sittin'](http://i.imgur.com/nwxtlsx.png)
 
 ###Link provided
 Once a picture is taken, the link is provided in a pop-up balloon. Clicking it sends it to the clipboard
@@ -24,7 +24,7 @@ Once a picture is taken, the link is provided in a pop-up balloon. Clicking it s
 ### Configurations
 For now, all options are saved for the session only. 
 
-![Options](http://i.imgur.com/NZehG4g.png)
+![Options](http://i.imgur.com/w0sJAdz.png)
 
 ###Next steps:
   * Create OSX app for alpha release.
