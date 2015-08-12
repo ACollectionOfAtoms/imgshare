@@ -17,9 +17,9 @@ The program then sits in the tray awaiting the creation of a new screenshot.
 ![Tray sittin'](http://i.imgur.com/nwxtlsx.png)
 
 ###Link provided
-Once a picture is taken, the link is provided in a pop-up balloon. Clicking it sends it to the clipboard
+Once a picture is taken, the link is provided in a pop-up balloon. Clicking it sends it to the clipboard. You can also choose to automatically send it to the clipboard, or only copy it using the menu. 
 
-![Balloon](http://i.imgur.com/njKMiRD.png)
+![Balloon](http://i.imgur.com/2HpjLfQ.png)
 
 ### Configurations
 For now, all options are saved for the session only. 
