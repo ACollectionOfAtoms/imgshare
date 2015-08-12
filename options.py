@@ -4,6 +4,9 @@
 from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QGridLayout,
                              QLabel, QPushButton, QLineEdit, QComboBox, QFileDialog, QFrame)
 from uploader import Uploader
+import subprocess
+import os
+import threading
 
 
 class OptionsWindow(QWidget):
@@ -196,9 +199,15 @@ class OptionsWindow(QWidget):
         self.loader.album = self.albums[album]
 
     def select_dir(self, field):
-        str = QFileDialog.getExistingDirectory()
-        if str != '':
-            field.setText(str)
+        path = QFileDialog.getExistingDirectory()
+        if path != '':
+            path = str(path) + "/"
+            field.setText(path)
+            self.scanner.scan_path = path
+            self.scanner.files_in_dir = self.scanner.dir_list()
+            with open(os.devnull, 'w') as nul:
+                subprocess.call(["defaults", "write", "com.apple.screencapture", "location", path])
+                subprocess.call(["killAll", "SystemUIServer"])
 
     def center(self):
         qr = self.frameGeometry()

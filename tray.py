@@ -20,8 +20,8 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.options = OptionsWindow(self.client, self.scanner, self)
 
         self.stop_event = threading.Event()
-        self.c_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
-        self.c_thread.start()
+        self.scan_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
+        self.scan_thread.start()
 
         menu = QtWidgets.QMenu(parent)
 
@@ -39,8 +39,6 @@ class Tray(QtWidgets.QSystemTrayIcon):
         sendAction.setShortcut("Ctrl+S")
         sendAction.setStatusTip("...")
         sendAction.triggered.connect(self.copy_last)
-        # Trigger goes here should grey-out if
-        # Auto send to clipboard option enabled.
 
         menu.addAction(sendAction)
         menu.addAction(optAction)
