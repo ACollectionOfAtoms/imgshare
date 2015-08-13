@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QHBoxLayout, 
 from uploader import Uploader
 import subprocess
 import os
+from imgurpython.helpers.error import ImgurClientError
 
 
 class OptionsWindow(QWidget):
@@ -29,7 +30,7 @@ class OptionsWindow(QWidget):
             self.trayIcon.showMessage(stat_code, "Error: " + "\"" + err_msg + "\"" +
                                       "\nimgur is having issues! You may want to restart.")
 
-    def initUI(self):
+    def init_options(self):
         if self.layout() is None:
             self.center()
             self.setWindowTitle('Options')
@@ -104,12 +105,13 @@ class OptionsWindow(QWidget):
             options_layout.addWidget(set_album, 11, 0)
             options_layout.addWidget(album_choice, 12, 0)
             ok_button = QPushButton("Ok")
-            cancel_button = QPushButton("Cancel")
+            ok_button.clicked.connect(self.close)
+            # cancel_button = QPushButton("Cancel")
 
             # Window Layout
             hbox = QHBoxLayout()
             hbox.addWidget(ok_button)
-            hbox.addWidget(cancel_button)
+            # hbox.addWidget(cancel_button)  # Add this later
             hbox.addStretch(1)
 
             vbox = QVBoxLayout()
@@ -178,10 +180,8 @@ class OptionsWindow(QWidget):
                     font: bold 12px;
                 }
                 """)
-            self.show()
         else:
-            self.activateWindow()
-            self.show()
+            pass
 
     # Both Scanner and Options objects connect to loader with new settings.
     def toggle_click(self):
@@ -211,6 +211,10 @@ class OptionsWindow(QWidget):
             with open(os.devnull, 'w') as nul:
                 subprocess.call(["defaults", "write", "com.apple.screencapture", "location", path])
                 subprocess.call(["killAll", "SystemUIServer"])
+
+    def show_opts(self):
+        self.activateWindow()
+        self.show()
 
     def center(self):
         qr = self.frameGeometry()

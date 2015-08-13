@@ -19,6 +19,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
         self.user = self.client.get_account('me').url
         self.scanner = Scanner(self.client, self)
         self.options = OptionsWindow(self.client, self.scanner, self)
+        self.options.init_options()
 
         self.stop_event = threading.Event()
         self.scan_thread = threading.Thread(target=self.scanner.scan, args=(self.stop_event,))
@@ -60,7 +61,7 @@ class Tray(QtWidgets.QSystemTrayIcon):
         sys.exit()
 
     def show_options(self):
-        self.options.initUI()
+        self.options.show_opts()
 
     def copy_last(self):
         if self.scanner.loader.link == '':

@@ -12,9 +12,9 @@ class Scanner:
     def __init__(self, client, trayIcon):
         self.client = client
         self.trayIcon = trayIcon
-        self.loader = Uploader(self.client, self.trayIcon)
 
         self.screenshot_path = ''
+        self.loader = Uploader(self.client, self.trayIcon)
         self.scan_path = os.path.expanduser('~') + '/Desktop/'
         self.files_in_dir = self.dir_list()
         self.stop_event = threading.Event()

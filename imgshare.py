@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import tray
+import PyQt5
+import sip
 from PyQt5 import QtCore, QtGui, QtWidgets
 from webbrowser import open_new_tab
 from imgurpython import ImgurClient
@@ -70,7 +72,7 @@ class Login(QtWidgets.QDialog):
             stat_code = str(e.status_code)
             err_msg = str(e.error_message)
             QtWidgets.QMessageBox.warning(self, stat_code, "Error " + "\"" + err_msg + "\"" +
-                                          "\n\nIt seems imgur is having some issues! imgshare will restart now :(")
+                                          "\n\nIt seems imgur is having some issues! Please restart imshare")
             self.appExit()
 
     def appExit(self):

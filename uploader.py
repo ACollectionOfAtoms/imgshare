@@ -18,6 +18,7 @@ class Uploader:
 
         self.album = None
         self.link = ''
+        self.last_link = None
 
         if self.click:
             self.trayIcon.messageClicked.connect(self.message_click_copy)  # Needs to be connected here! Qt Bug?!
@@ -60,9 +61,7 @@ class Uploader:
         self.trayIcon.showMessage("Link Copied", "imgur link sent to clipboard")
 
     def message_click_copy(self):  # Can be infinite loop if user continues to click. But who would do that?! (fix this)
-        if self.link == '':
-            pass
-        else:
+        if self.link != '':
             self.to_clipboard()
             self.copy_notification()
             self.trayIcon.messageClicked.connect(self.message_click_copy)  # Needs to be reconnected! May be OSX Qt Bug.
