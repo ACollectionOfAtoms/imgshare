@@ -30,6 +30,7 @@ For now, all options are saved for the session only.
   * Create OSX app for alpha release.
   * Implement launch on start up and save user settings.
   * Future: allow user to easily upload images on their computer or the web through right-click functionality.
+  * Make the UI as pretty as the logo!
 
 ##Eager to use the pre-release?
 ####These are the Python 2.7 dependencies:
